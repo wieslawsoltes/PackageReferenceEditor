@@ -9,9 +9,9 @@ namespace MSBuildPropsUpdater
 {
     public class Updater
     {
-        public IList<XDocument> Documents { get; private set; }
-        public IList<PackageReference> References { get; private set; }
-        public IEnumerable<IGrouping<string, PackageReference>> GroupedReferences { get; private set; }
+        public IList<XDocument> Documents { get; set; }
+        public IList<PackageReference> References { get; set; }
+        public Dictionary<string, List<PackageReference>> GroupedReferences { get; set; }
 
         public static string NormalizePath(string path)
         {
@@ -57,7 +57,7 @@ namespace MSBuildPropsUpdater
 
             FindReferences(searchPath, searchPattern, ignoredPaths, updater.References, updater.Documents);
 
-            updater.GroupedReferences = updater.References.GroupBy(x => x.Name);
+            updater.GroupedReferences = updater.References.GroupBy(x => x.Name).OrderBy(x => x.Key).ToDictionary(x => x.Key, x => x.ToList());
 
             return updater;
         }
@@ -68,7 +68,7 @@ namespace MSBuildPropsUpdater
             foreach (var package in GroupedReferences)
             {
                 Debug.WriteLine($"Package {package.Key} is installed:");
-                foreach (var v in package)
+                foreach (var v in package.Value)
                 {
                     Debug.WriteLine($"{v.Version}, {v.FileName}");
                 }
@@ -80,12 +80,12 @@ namespace MSBuildPropsUpdater
             Debug.WriteLine("Checking installed NuGet package dependencies versions:");
             foreach (var package in GroupedReferences)
             {
-                var packageVersion = package.First().Version;
-                bool isValidVersion = package.All(x => x.Version == packageVersion);
+                var packageVersion = package.Value.First().Version;
+                bool isValidVersion = package.Value.All(x => x.Version == packageVersion);
                 if (!isValidVersion)
                 {
                     Debug.WriteLine($"Error: package {package.Key} has multiple versions installed:");
-                    foreach (var v in package)
+                    foreach (var v in package.Value)
                     {
                         Debug.WriteLine($"{v.Version}, {v.FileName}");
                     }
