@@ -11,10 +11,10 @@ namespace MSBuildPropsUpdater
 
         private void buttonSearch_Click(object sender, RoutedEventArgs e)
         {
-            //var updater = Updater.Create(@"C:\DOWNLOADS\GitHub\", "*.props", new string[] { });
-            //updater.PrintVersions();
-            //updater.ValidateVersions();
-            DataContext = Updater.Create(textSearchPath.Text, textSearchPattern.Text, new string[] { });
+            var result = Updater.FindReferences(@"C:\DOWNLOADS\GitHub\", "*.props", new string[] { });
+            result.PrintVersions();
+            result.ValidateVersions();
+            DataContext = Updater.FindReferences(textSearchPath.Text, textSearchPattern.Text, new string[] { });
         }
     }
 }
