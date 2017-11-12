@@ -24,17 +24,17 @@ namespace MSBuildPropsUpdater.WPF
 
         private void buttonUpdate_Click(object sender, RoutedEventArgs e)
         {
-            if (groups.SelectedItem is KeyValuePair<string, List<PackageReference>> references)
+            try
             {
-                foreach (var v in references.Value)
+                if (groups.SelectedItem is KeyValuePair<string, List<PackageReference>> references)
                 {
-                    try
+                    foreach (var v in references.Value)
                     {
                         if (v.VersionAttribute != null)
                         {
                             if (v.Version != v.VersionAttribute.Value)
                             {
-                                Debug.WriteLine($"Old: {v.VersionAttribute.Value}, New: {v.Version}, File: {v.FileName}");
+                                Debug.WriteLine($"Name: {v.Name}, old: {v.VersionAttribute.Value}, new: {v.Version}, file: {v.FileName}");
                                 v.VersionAttribute.Value = v.Version;
                                 v.Document.Save(v.FileName);
                             }
@@ -46,18 +46,18 @@ namespace MSBuildPropsUpdater.WPF
                             {
                                 if (v.Version != v.VersionAttribute.Value)
                                 {
-                                    Debug.WriteLine($"Old: {version.Value}, New: {v.Version}, File: {v.FileName}");
+                                    Debug.WriteLine($"Name: {v.Name}, old: {version.Value}, new: {v.Version}, file: {v.FileName}");
                                     version.Value = v.Version;
                                     v.Document.Save(v.FileName);
                                 }
                             }
                         }
                     }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message);
-                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
     }
