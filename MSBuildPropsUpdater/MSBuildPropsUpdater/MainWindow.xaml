@@ -24,7 +24,10 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <TextBox x:Name="textSearchPath" Text="C:\DOWNLOADS\GitHub\" Grid.Row="0"/>
-            <TextBox x:Name="textSearchPattern" Text="*.props" Grid.Row="1"/>
+            <ComboBox x:Name="textSearchPattern" SelectedIndex="0" IsEditable="True" Grid.Row="1">
+                <ComboBoxItem>*.props</ComboBoxItem>
+                <ComboBoxItem>*.csproj</ComboBoxItem>
+            </ComboBox>
             <Button x:Name="buttonSearch" Content="_Search" Click="buttonSearch_Click" Grid.Row="2"/>
         </Grid>
         <DataGrid x:Name="groups" ItemsSource="{Binding GroupedReferences}" CanUserAddRows="False" AutoGenerateColumns="False" Grid.Row="1" Grid.Column="0">
