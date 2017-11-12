@@ -9,8 +9,16 @@ before_build:
 build:
   project: MSBuildPropsUpdater.sln
   verbosity: minimal
+after_build:
+- cmd: >-
+    dotnet restore src/MSBuildPropsUpdater
+
+    dotnet build src/MSBuildPropsUpdater/MSBuildPropsUpdater.csproj -c Release -f netstandard2.0
+
+    dotnet publish src/MSBuildPropsUpdater/MSBuildPropsUpdater.csproj -c Release -f netstandard2.0
 test: off
 artifacts:
 - path: src\MSBuildPropsUpdater.WPF\bin\Release
   name: MSBuildPropsUpdater.WPF
+- path: src\MSBuildPropsUpdater\bin\Release\*.nupkg
 deploy: off
