@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 
-namespace MSBuildPropsUpdater.WPF
+namespace MSBuildPropsUpdater
 {
     public static class Updater
     {
