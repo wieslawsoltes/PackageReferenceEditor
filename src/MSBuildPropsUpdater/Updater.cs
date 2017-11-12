@@ -95,29 +95,59 @@ namespace MSBuildPropsUpdater.WPF
             Console.WriteLine("All NuGet package dependencies versions are valid.");
         }
 
-        public static void UpdateVersions(KeyValuePair<string, List<PackageReference>> references)
+        public static void UpdateVersions(this UpdaterResult result, string name, string version)
         {
             Console.WriteLine("Updating NuGet package dependencies versions:");
-            foreach (var v in references.Value)
+            foreach (var v in result.GroupedReferences[name])
+            {
+                if (v.VersionAttribute != null)
+                {
+                    if (version != v.VersionAttribute.Value)
+                    {
+                        Console.WriteLine($"Name: {name}, old: {v.VersionAttribute.Value}, new: {version}, file: {v.FileName}");
+                        v.VersionAttribute.Value = version;
+                        v.Document.Save(v.FileName);
+                    }
+                }
+                else
+                {
+                    var versionElement = v.Reference.Elements().First(x => x.Name.LocalName == "Version");
+                    if (versionElement != null)
+                    {
+                        if (version != v.VersionAttribute.Value)
+                        {
+                            Console.WriteLine($"Name: {name}, old: {versionElement.Value}, new: {version}, file: {v.FileName}");
+                            versionElement.Value = version;
+                            v.Document.Save(v.FileName);
+                        }
+                    }
+                }
+            }
+        }
+
+        public static void UpdateVersions(KeyValuePair<string, List<PackageReference>> package)
+        {
+            Console.WriteLine("Updating NuGet package dependencies versions:");
+            foreach (var v in package.Value)
             {
                 if (v.VersionAttribute != null)
                 {
                     if (v.Version != v.VersionAttribute.Value)
                     {
-                        Console.WriteLine($"Name: {references.Key}, old: {v.VersionAttribute.Value}, new: {v.Version}, file: {v.FileName}");
+                        Console.WriteLine($"Name: {package.Key}, old: {v.VersionAttribute.Value}, new: {v.Version}, file: {v.FileName}");
                         v.VersionAttribute.Value = v.Version;
                         v.Document.Save(v.FileName);
                     }
                 }
                 else
                 {
-                    var version = v.Reference.Elements().First(x => x.Name.LocalName == "Version");
-                    if (version != null)
+                    var versionElement = v.Reference.Elements().First(x => x.Name.LocalName == "Version");
+                    if (versionElement != null)
                     {
                         if (v.Version != v.VersionAttribute.Value)
                         {
-                            Console.WriteLine($"Name: {references.Key}, old: {version.Value}, new: {v.Version}, file: {v.FileName}");
-                            version.Value = v.Version;
+                            Console.WriteLine($"Name: {package.Key}, old: {versionElement.Value}, new: {v.Version}, file: {v.FileName}");
+                            versionElement.Value = v.Version;
                             v.Document.Save(v.FileName);
                         }
                     }
