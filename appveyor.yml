@@ -1,7 +1,6 @@
 version: '{build}'
 image: Visual Studio 2017
 configuration: Release
-platform: Any CPU
 install:
 - cmd: appveyor DownloadFile https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
 before_build:
@@ -20,5 +19,5 @@ test: off
 artifacts:
 - path: src\MSBuildPropsUpdater.WPF\bin\Release
   name: MSBuildPropsUpdater.WPF
-- path: src\MSBuildPropsUpdater\bin\Any CPU\Release\*.nupkg
+- path: src\MSBuildPropsUpdater\bin\Release\*.nupkg
 deploy: off
