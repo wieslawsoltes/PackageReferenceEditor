@@ -54,9 +54,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="PackageReference.cs" />
-    <Compile Include="Updater.cs" />
-    <Compile Include="UpdaterResult.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -77,6 +74,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MSBuildPropsUpdater\MSBuildPropsUpdater.csproj">
+      <Project>{71ee73a0-fe62-4978-8f0d-140a8a72a1f1}</Project>
+      <Name>MSBuildPropsUpdater</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
