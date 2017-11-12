@@ -36,12 +36,19 @@
             </DataGrid.Columns>
         </DataGrid>
         <GridSplitter ResizeDirection="Columns" ResizeBehavior="PreviousAndNext" Width="10" Grid.Row="1" Grid.Column="1"/>
-        <DataGrid x:Name="references" ItemsSource="{Binding ElementName=groups, Path=SelectedItem.Value}" CanUserAddRows="False" AutoGenerateColumns="False" Grid.Row="1" Grid.Column="2">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Name" Binding="{Binding Name}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="Version" Binding="{Binding Version}" IsReadOnly="False"/>
-                <DataGridTextColumn Header="FileName" Binding="{Binding FileName}" IsReadOnly="True"/>
-            </DataGrid.Columns>
-        </DataGrid>
+        <Grid Grid.Row="1" Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <DataGrid x:Name="references" ItemsSource="{Binding ElementName=groups, Path=SelectedItem.Value}" CanUserAddRows="False" AutoGenerateColumns="False" Grid.Row="0">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Version" Binding="{Binding Version}" IsReadOnly="False"/>
+                    <DataGridTextColumn Header="FileName" Binding="{Binding FileName}" IsReadOnly="True"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <Button x:Name="buttonUpdate" Content="_Update Files" Click="buttonUpdate_Click" Grid.Row="1"/>
+        </Grid>
     </Grid>
 </Window>
