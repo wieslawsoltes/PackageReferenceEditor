@@ -94,5 +94,35 @@ namespace MSBuildPropsUpdater.WPF
             };
             Console.WriteLine("All NuGet package dependencies versions are valid.");
         }
+
+        public static void UpdateVersions(KeyValuePair<string, List<PackageReference>> references)
+        {
+            Console.WriteLine("Updating NuGet package dependencies versions:");
+            foreach (var v in references.Value)
+            {
+                if (v.VersionAttribute != null)
+                {
+                    if (v.Version != v.VersionAttribute.Value)
+                    {
+                        Console.WriteLine($"Name: {references.Key}, old: {v.VersionAttribute.Value}, new: {v.Version}, file: {v.FileName}");
+                        v.VersionAttribute.Value = v.Version;
+                        v.Document.Save(v.FileName);
+                    }
+                }
+                else
+                {
+                    var version = v.Reference.Elements().First(x => x.Name.LocalName == "Version");
+                    if (version != null)
+                    {
+                        if (v.Version != v.VersionAttribute.Value)
+                        {
+                            Console.WriteLine($"Name: {references.Key}, old: {version.Value}, new: {v.Version}, file: {v.FileName}");
+                            version.Value = v.Version;
+                            v.Document.Save(v.FileName);
+                        }
+                    }
+                }
+            }
+        }
     }
 }

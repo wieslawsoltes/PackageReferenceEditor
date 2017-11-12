@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Windows;
 
 namespace MSBuildPropsUpdater.WPF
@@ -26,32 +24,11 @@ namespace MSBuildPropsUpdater.WPF
         {
             try
             {
-                if (groups.SelectedItem is KeyValuePair<string, List<PackageReference>> references)
+                if (DataContext is UpdaterResult result)
                 {
-                    foreach (var v in references.Value)
+                    if (groups.SelectedItem is KeyValuePair<string, List<PackageReference>> references)
                     {
-                        if (v.VersionAttribute != null)
-                        {
-                            if (v.Version != v.VersionAttribute.Value)
-                            {
-                                Debug.WriteLine($"Name: {v.Name}, old: {v.VersionAttribute.Value}, new: {v.Version}, file: {v.FileName}");
-                                v.VersionAttribute.Value = v.Version;
-                                v.Document.Save(v.FileName);
-                            }
-                        }
-                        else
-                        {
-                            var version = v.Reference.Elements().First(x => x.Name.LocalName == "Version");
-                            if (version != null)
-                            {
-                                if (v.Version != v.VersionAttribute.Value)
-                                {
-                                    Debug.WriteLine($"Name: {v.Name}, old: {version.Value}, new: {v.Version}, file: {v.FileName}");
-                                    version.Value = v.Version;
-                                    v.Document.Save(v.FileName);
-                                }
-                            }
-                        }
+                        Updater.UpdateVersions(references);
                     }
                 }
             }
