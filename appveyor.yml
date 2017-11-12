@@ -20,5 +20,5 @@ test: off
 artifacts:
 - path: src\MSBuildPropsUpdater.WPF\bin\Release
   name: MSBuildPropsUpdater.WPF
-- path: src\MSBuildPropsUpdater\bin\Release\*.nupkg
+- path: path: src\MSBuildPropsUpdater\bin\Any CPU\Release\*.nupkg
 deploy: off
