@@ -11,4 +11,3 @@ jobs:
       - checkout
       - run: dotnet restore src/MSBuildPropsUpdater
       - run: dotnet build src/MSBuildPropsUpdater/MSBuildPropsUpdater.csproj -c Release -f netstandard2.0
-      - run: dotnet publish src/MSBuildPropsUpdater/MSBuildPropsUpdater.csproj -c Release -f netstandard2.0

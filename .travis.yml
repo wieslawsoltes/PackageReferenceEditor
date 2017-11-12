@@ -11,4 +11,3 @@ dotnet: 2.0.0
 script:
   - dotnet restore src/MSBuildPropsUpdater
   - dotnet build src/MSBuildPropsUpdater/MSBuildPropsUpdater.csproj -c Release -f netstandard2.0
-  - dotnet publish src/MSBuildPropsUpdater/MSBuildPropsUpdater.csproj -c Release -f netstandard2.0

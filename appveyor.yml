@@ -15,7 +15,7 @@ after_build:
 
     dotnet build src/MSBuildPropsUpdater/MSBuildPropsUpdater.csproj -c Release -f netstandard2.0
 
-    dotnet publish src/MSBuildPropsUpdater/MSBuildPropsUpdater.csproj -c Release -f netstandard2.0
+    dotnet pack src/MSBuildPropsUpdater/MSBuildPropsUpdater.csproj -c Release
 test: off
 artifacts:
 - path: src\MSBuildPropsUpdater.WPF\bin\Release
