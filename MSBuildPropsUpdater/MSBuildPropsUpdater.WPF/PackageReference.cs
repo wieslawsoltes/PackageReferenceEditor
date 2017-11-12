@@ -1,6 +1,6 @@
 ﻿using System.Xml.Linq;
 
-namespace MSBuildPropsUpdater
+namespace MSBuildPropsUpdater.WPF
 {
     public class PackageReference
     {

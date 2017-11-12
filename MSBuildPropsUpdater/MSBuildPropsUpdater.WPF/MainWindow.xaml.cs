@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace MSBuildPropsUpdater
+namespace MSBuildPropsUpdater.WPF
 {
     public partial class MainWindow : Window
     {
