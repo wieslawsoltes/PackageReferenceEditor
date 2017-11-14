@@ -1,7 +1,5 @@
 ﻿using System;
 using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Input;
 using Avalonia.Logging.Serilog;
 using Avalonia.Markup.Xaml;
 using Serilog;
