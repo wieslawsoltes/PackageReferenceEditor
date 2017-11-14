@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("PackageReferenceEditor.Avalonia")]
 [assembly: AssemblyDescription("MSBuild, csproj and props package reference editor.")]
