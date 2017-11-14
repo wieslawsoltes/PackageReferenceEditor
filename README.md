@@ -1,8 +1,8 @@
 # PackageReferenceEditor
 
-[![Build status](https://ci.appveyor.com/api/projects/status/v654ae52b4bh7y5g/branch/master?svg=true)](https://ci.appveyor.com/project/wieslawsoltes/msbuildpropsupdater/branch/master)
-[![Build Status](https://travis-ci.org/wieslawsoltes/MSBuildPropsUpdater.svg?branch=master)](https://travis-ci.org/wieslawsoltes/MSBuildPropsUpdater)
-[![CircleCI](https://circleci.com/gh/wieslawsoltes/MSBuildPropsUpdater/tree/master.svg?style=svg)](https://circleci.com/gh/wieslawsoltes/MSBuildPropsUpdater/tree/master)
+[![Build status](https://ci.appveyor.com/api/projects/status/42j9f6aylrv36ufs/branch/master?svg=true)](https://ci.appveyor.com/project/wieslawsoltes/packagereferenceeditor/branch/master)
+[![Build Status](https://travis-ci.org/wieslawsoltes/PackageReferenceEditor.svg?branch=0.0.1)](https://travis-ci.org/wieslawsoltes/PackageReferenceEditor)
+[![CircleCI](https://circleci.com/gh/wieslawsoltes/PackageReferenceEditor/tree/master.svg?style=svg)](https://circleci.com/gh/wieslawsoltes/PackageReferenceEditor/tree/master)
 
 [![NuGet](https://img.shields.io/nuget/v/PackageReferenceEditor.svg)](https://www.nuget.org/packages/PackageReferenceEditor)
 
