@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2008
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSBuildPropsUpdater.WPF", "src\MSBuildPropsUpdater.WPF\MSBuildPropsUpdater.WPF.csproj", "{DB26B6F9-6F2D-4C1B-AE22-D99F1BA5FD63}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PackageReferenceEditor.WPF", "src\PackageReferenceEditor.WPF\PackageReferenceEditor.WPF.csproj", "{DB26B6F9-6F2D-4C1B-AE22-D99F1BA5FD63}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSBuildPropsUpdater", "src\MSBuildPropsUpdater\MSBuildPropsUpdater.csproj", "{71EE73A0-FE62-4978-8F0D-140A8A72A1F1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PackageReferenceEditor", "src\PackageReferenceEditor\PackageReferenceEditor.csproj", "{71EE73A0-FE62-4978-8F0D-140A8A72A1F1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
