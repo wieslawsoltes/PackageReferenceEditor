@@ -2,5 +2,43 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="PackageReferenceEditor" Height="700" Width="1000"
         UseLayoutRounding="True">
-    <Grid></Grid>
+    <Grid ColumnDefinitions="250,10,*" RowDefinitions="Auto,*">
+        <Grid RowDefinitions="Auto,Auto,Auto" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
+            <Grid ColumnDefinitions="*,Auto" Grid.Row="0">
+                <TextBox x:Name="textSearchPath" Text="C:\GitHub\" Grid.Column="0"/>
+                <Button x:Name="buttonBrowse" Content="Browse" Grid.Column="1"/>
+            </Grid>
+            <TextBox x:Name="textSearchPattern" Text="*.props" Grid.Row="1"/>
+            <Button x:Name="buttonSearch" Content="Search" Grid.Row="2"/>
+        </Grid>
+        <ListBox x:Name="groups" Items="{Binding GroupedReferences}" Grid.Row="1" Grid.Column="0">
+            <ListBox.DataTemplates>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Key}"/>
+                </DataTemplate>
+            </ListBox.DataTemplates>
+        </ListBox>
+        <GridSplitter Width="10" Grid.Row="1" Grid.Column="1"/>
+        <Grid RowDefinitions="*,Auto,Auto"  Grid.Row="1" Grid.Column="2">
+            <ListBox x:Name="references" Items="{Binding #groups.SelectedItem.Value}" Grid.Row="0">
+                <ListBox.DataTemplates>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Version}"/>
+                    </DataTemplate>
+                </ListBox.DataTemplates>
+            </ListBox>
+            <ContentPresenter Content="{Binding #references.SelectedItem}" Grid.Row="1">
+                <ContentPresenter.DataTemplates>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Text="{Binding Name}" HorizontalAlignment="Stretch"/>
+                            <TextBox Text="{Binding Version}" HorizontalAlignment="Stretch"/>
+                            <TextBlock Text="{Binding FileName}" HorizontalAlignment="Stretch"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ContentPresenter.DataTemplates>
+            </ContentPresenter>
+            <Button x:Name="buttonUpdate" Content="Update Files" Grid.Row="2"/>
+        </Grid>
+    </Grid>
 </Window>
