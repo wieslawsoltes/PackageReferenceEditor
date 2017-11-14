@@ -2,11 +2,11 @@
 using System.Runtime.InteropServices;
 using System.Windows;
 
-[assembly: AssemblyTitle("MSBuildPropsUpdater.WPF")]
-[assembly: AssemblyDescription("MSBuild props package reference version updater.")]
+[assembly: AssemblyTitle("PackageReferenceEditor.WPF")]
+[assembly: AssemblyDescription("MSBuild, csproj and props package reference editor.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Wiesław Šoltés")]
-[assembly: AssemblyProduct("MSBuildPropsUpdater.WPF")]
+[assembly: AssemblyProduct("PackageReferenceEditor.WPF")]
 [assembly: AssemblyCopyright("Copyright © Wiesław Šoltés 2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
