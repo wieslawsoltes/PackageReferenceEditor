@@ -4,20 +4,20 @@ configuration: Release
 install:
 - cmd: appveyor DownloadFile https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
 before_build:
-- cmd: nuget.exe restore MSBuildPropsUpdater.sln
+- cmd: nuget.exe restore PackageReferenceEditor.sln
 build:
-  project: MSBuildPropsUpdater.sln
+  project: PackageReferenceEditor.sln
   verbosity: minimal
 after_build:
 - cmd: >-
-    dotnet restore src/MSBuildPropsUpdater
+    dotnet restore src/PackageReferenceEditor
 
-    dotnet build src/MSBuildPropsUpdater/MSBuildPropsUpdater.csproj -c Release -f netstandard2.0
+    dotnet build src/PackageReferenceEditor/PackageReferenceEditor.csproj -c Release -f netstandard2.0
 
-    dotnet pack src/MSBuildPropsUpdater/MSBuildPropsUpdater.csproj -c Release
+    dotnet pack src/PackageReferenceEditor/PackageReferenceEditor.csproj -c Release
 test: off
 artifacts:
-- path: src\MSBuildPropsUpdater.WPF\bin\Release
-  name: MSBuildPropsUpdater.WPF
-- path: src\MSBuildPropsUpdater\bin\Release\*.nupkg
+- path: src\PackageReferenceEditor.WPF\bin\Release
+  name: PackageReferenceEditor.WPF
+- path: src\PackageReferenceEditor\bin\Release\*.nupkg
 deploy: off
