@@ -1,4 +1,4 @@
-﻿<Window x:Class="MSBuildPropsUpdater.WPF.MainWindow"
+﻿<Window x:Class="PackageReferenceEditor.WPF.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -23,7 +23,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <TextBox x:Name="textSearchPath" Text="C:\DOWNLOADS\GitHub\" Grid.Row="0"/>
+            <TextBox x:Name="textSearchPath" Text="C:\GitHub\" Grid.Row="0"/>
             <ComboBox x:Name="textSearchPattern" SelectedIndex="0" IsEditable="True" Grid.Row="1">
                 <ComboBoxItem>*.props</ComboBoxItem>
                 <ComboBoxItem>*.csproj</ComboBoxItem>
