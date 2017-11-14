@@ -10,11 +10,11 @@
     <Version>0.0.1</Version>
     <Authors>Wiesław Šoltés</Authors>
     <Company>Wiesław Šoltés</Company>
-    <Description>MSBuild props package reference version updater.</Description>
+    <Description>MSBuild, csproj and props package reference editor.</Description>
     <Copyright>Copyright © Wiesław Šoltés 2017</Copyright>
-    <PackageLicenseUrl>https://github.com/wieslawsoltes/MSBuildPropsUpdater/blob/master/LICENSE.TXT</PackageLicenseUrl>
-    <PackageProjectUrl>https://github.com/wieslawsoltes/MSBuildPropsUpdater</PackageProjectUrl>
-    <PackageTags>msbuild;props;csproj;packagereference;nuget;updater</PackageTags>
+    <PackageLicenseUrl>https://github.com/wieslawsoltes/PackageReferenceEditor/blob/master/LICENSE.TXT</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/wieslawsoltes/PackageReferenceEditor</PackageProjectUrl>
+    <PackageTags>msbuild;props;csproj;packagereference;nuget;editor</PackageTags>
   </PropertyGroup>
 
 </Project>
