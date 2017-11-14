@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace MSBuildPropsUpdater.WPF
+namespace PackageReferenceEditor.WPF
 {
     public partial class App : Application
     {
