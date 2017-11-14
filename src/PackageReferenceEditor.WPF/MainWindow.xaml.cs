@@ -13,7 +13,14 @@ namespace PackageReferenceEditor.WPF
 
         private void buttonSearch_Click(object sender, RoutedEventArgs e)
         {
-            DataContext = Updater.FindReferences(textSearchPath.Text, textSearchPattern.Text, new string[] { });
+            try
+            {
+                DataContext = Updater.FindReferences(textSearchPath.Text, textSearchPattern.Text, new string[] { });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void buttonUpdate_Click(object sender, RoutedEventArgs e)
