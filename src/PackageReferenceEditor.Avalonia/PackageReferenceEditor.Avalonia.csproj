@@ -25,4 +25,8 @@
   <Import Project="$(MSBuildThisFileDirectory)..\..\build\Avalonia.props" />
   <Import Project="$(MSBuildThisFileDirectory)..\..\build\Avalonia.Desktop.props" />
 
+  <ItemGroup>
+    <ProjectReference Include="..\PackageReferenceEditor\PackageReferenceEditor.csproj" />
+  </ItemGroup>
+
 </Project>
