@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 
-namespace MSBuildPropsUpdater
+namespace PackageReferenceEditor
 {
     public static class Updater
     {
