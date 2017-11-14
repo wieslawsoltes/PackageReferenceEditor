@@ -13,7 +13,23 @@ namespace PackageReferenceEditor.WPF
 
         private void buttonBrowse_Click(object sender, RoutedEventArgs e)
         {
-            // TODO: 
+            try
+            {
+                var dlg = new System.Windows.Forms.FolderBrowserDialog();
+                if (!string.IsNullOrWhiteSpace(textSearchPath.Text))
+                {
+                    dlg.SelectedPath = textSearchPath.Text;
+                }
+
+                if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    textSearchPath.Text = dlg.SelectedPath;
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void buttonSearch_Click(object sender, RoutedEventArgs e)
