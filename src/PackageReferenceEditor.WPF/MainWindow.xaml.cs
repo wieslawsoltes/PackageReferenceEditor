@@ -11,6 +11,11 @@ namespace PackageReferenceEditor.WPF
             InitializeComponent();
         }
 
+        private void buttonBrowse_Click(object sender, RoutedEventArgs e)
+        {
+            // TODO: 
+        }
+
         private void buttonSearch_Click(object sender, RoutedEventArgs e)
         {
             try

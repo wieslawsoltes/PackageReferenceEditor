@@ -23,7 +23,15 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <TextBox x:Name="textSearchPath" Text="C:\GitHub\" Grid.Row="0"/>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="250"/>
+                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBox x:Name="textSearchPath" Text="C:\GitHub\" Grid.Column="0"/>
+                <Button x:Name="buttonBrowse" Content="Browse" Click="buttonBrowse_Click" Grid.Column="1"/>
+            </Grid>
             <ComboBox x:Name="textSearchPattern" SelectedIndex="0" IsEditable="True" Grid.Row="1">
                 <ComboBoxItem>*.props</ComboBoxItem>
                 <ComboBoxItem>*.csproj</ComboBoxItem>
