@@ -26,6 +26,8 @@ You can find the packages here [NuGet](https://www.nuget.org/packages/PackageRef
 
 ## Example Usage with Cake build scripts
 
+Same code can be used in C# programs by removing `#addin` directive and installing package from NuGet.
+
 ### Print package versions
 ```C#
 #addin "nuget:?package=PackageReferenceEditor&version=0.0.1"
@@ -60,8 +62,6 @@ var result = Updater.FindReferences(@"C:\GitHub\", "*.props", new string[] { });
 
 result.UpdateVersions("Newtonsoft.Json", "10.0.3");
 ```
-
-Same code can be used in C# programs by removing `#addin` directive and installing package from NuGet.
 
 ## Resources
 
