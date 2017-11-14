@@ -4,58 +4,57 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="MainWindow" Height="700" Width="1000"
+        Title="MainWindow" Height="500" Width="800"
         WindowStartupLocation="CenterScreen"
         UseLayoutRounding="True" SnapsToDevicePixels="True" TextOptions.TextFormattingMode="Display">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="250"/>
-            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="8"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
+        <Grid Margin="2" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-                <TextBox x:Name="textSearchPath" Text="C:\GitHub\" Grid.Column="0"/>
-                <Button x:Name="buttonBrowse" Content="Browse" Click="buttonBrowse_Click" Grid.Column="1"/>
-            </Grid>
-            <ComboBox x:Name="textSearchPattern" SelectedIndex="0" IsEditable="True" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="100"/>
+            </Grid.ColumnDefinitions>
+            <TextBox x:Name="textSearchPath" Text="C:\DOWNLOADS\GitHub" Margin="2" Grid.Row="0" Grid.Column="0"/>
+            <Button x:Name="buttonBrowse" Content="Browse" Click="buttonBrowse_Click" Margin="2" Grid.Row="0" Grid.Column="1"/>
+            <ComboBox x:Name="textSearchPattern" SelectedIndex="0" IsEditable="True" Margin="2" Grid.Row="1" Grid.Column="0">
                 <ComboBoxItem>*.props</ComboBoxItem>
                 <ComboBoxItem>*.csproj</ComboBoxItem>
             </ComboBox>
-            <Button x:Name="buttonSearch" Content="_Search" Click="buttonSearch_Click" Grid.Row="2"/>
+            <Button x:Name="buttonSearch" Content="_Search" Click="buttonSearch_Click" Margin="2" Grid.Row="1" Grid.Column="1"/>
         </Grid>
-        <DataGrid x:Name="groups" ItemsSource="{Binding GroupedReferences}" CanUserAddRows="False" AutoGenerateColumns="False" Grid.Row="1" Grid.Column="0">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Key" Binding="{Binding Key}" IsReadOnly="True"/>
-            </DataGrid.Columns>
-        </DataGrid>
-        <GridSplitter ResizeDirection="Columns" ResizeBehavior="PreviousAndNext" Width="10" Grid.Row="1" Grid.Column="1"/>
-        <Grid Grid.Row="1" Grid.Column="2">
+        <Grid Margin="2" Grid.Row="1" Grid.Column="0">
+            <DataGrid x:Name="groups" ItemsSource="{Binding GroupedReferences}" CanUserAddRows="False" AutoGenerateColumns="False" Margin="2">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Key" Binding="{Binding Key}" IsReadOnly="True"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+        <GridSplitter ResizeDirection="Columns" ResizeBehavior="PreviousAndNext" Width="8" Grid.Row="1" Grid.Column="1"/>
+        <Grid Margin="2" Grid.Row="1" Grid.Column="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <DataGrid x:Name="references" ItemsSource="{Binding ElementName=groups, Path=SelectedItem.Value}" CanUserAddRows="False" AutoGenerateColumns="False" Grid.Row="0">
+            <DataGrid x:Name="references" ItemsSource="{Binding ElementName=groups, Path=SelectedItem.Value}" CanUserAddRows="False" AutoGenerateColumns="False" Margin="2" Grid.Row="0">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Name" Binding="{Binding Name}" IsReadOnly="True"/>
                     <DataGridTextColumn Header="Version" Binding="{Binding Version}" IsReadOnly="False"/>
                     <DataGridTextColumn Header="FileName" Binding="{Binding FileName}" IsReadOnly="True"/>
                 </DataGrid.Columns>
             </DataGrid>
-            <Button x:Name="buttonUpdate" Content="_Update Files" Click="buttonUpdate_Click" Grid.Row="1"/>
+            <Button x:Name="buttonUpdate" Content="_Update Files" Click="buttonUpdate_Click" Margin="2" Grid.Row="1"/>
         </Grid>
     </Grid>
 </Window>
