@@ -9,5 +9,5 @@ env:
 mono: latest
 dotnet: 2.0.0
 script:
-  - dotnet restore src/MSBuildPropsUpdater
-  - dotnet build src/MSBuildPropsUpdater/MSBuildPropsUpdater.csproj -c Release -f netstandard2.0
+  - dotnet restore src/PackageReferenceEditor
+  - dotnet build src/PackageReferenceEditor/PackageReferenceEditor.csproj -c Release -f netstandard2.0
