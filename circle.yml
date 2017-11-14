@@ -11,3 +11,5 @@ jobs:
       - checkout
       - run: dotnet restore src/PackageReferenceEditor
       - run: dotnet build src/PackageReferenceEditor/PackageReferenceEditor.csproj -c Release -f netstandard2.0
+      - run: dotnet restore src/PackageReferenceEditor.Avalonia
+      - run: dotnet build src/PackageReferenceEditor.Avalonia/PackageReferenceEditor.Avalonia.csproj -c Release -f netcoreapp2.0
