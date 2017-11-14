@@ -1,6 +1,6 @@
 ﻿using System.Xml.Linq;
 
-namespace MSBuildPropsUpdater
+namespace PackageReferenceEditor
 {
     public class PackageReference
     {
