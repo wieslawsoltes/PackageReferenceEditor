@@ -47,19 +47,25 @@ namespace PackageReferenceEditor
             }
         }
 
-        public static UpdaterResult FindReferences(string searchPath, string searchPattern, IEnumerable<string> ignoredPaths)
+        public static UpdaterResult FindReferences(this UpdaterResult updater, string searchPath, string searchPattern, IEnumerable<string> ignoredPaths)
         {
-            var updater = new UpdaterResult()
-            {
-                Documents = new List<XDocument>(),
-                References = new List<PackageReference>()
-            };
-
             FindReferences(searchPath, searchPattern, ignoredPaths, updater.References, updater.Documents);
 
             updater.GroupedReferences = updater.References.GroupBy(x => x.Name).OrderBy(x => x.Key).ToDictionary(x => x.Key, x => x.ToList());
+            updater.CurrentReferences = updater.GroupedReferences.FirstOrDefault();
+            updater.CurrentReference = updater.CurrentReferences.Value.FirstOrDefault();
 
             return updater;
+        }
+
+        public static UpdaterResult FindReferences(string searchPath, string searchPattern, IEnumerable<string> ignoredPaths)
+        {
+            return new UpdaterResult()
+            {
+                Documents = new List<XDocument>(),
+                References = new List<PackageReference>()
+            }
+            .FindReferences(searchPath, searchPattern, ignoredPaths);
         }
 
         public static void PrintVersions(this UpdaterResult result)

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Xml.Linq;
 using Avalonia;
 using Avalonia.Logging.Serilog;
 using Avalonia.Markup.Xaml;
@@ -27,8 +29,11 @@ namespace PackageReferenceEditor.Avalonia
                 var app = new App();
                 AppBuilder.Configure(app)
                     .UsePlatformDetect()
-                    .SetupWithoutStarting();
-                app.Start();
+                    .Start<MainWindow>(() => new UpdaterResult()
+                    {
+                        Documents = new List<XDocument>(),
+                        References = new List<PackageReference>()
+                    });
             }
             catch (Exception ex)
             {
@@ -49,13 +54,6 @@ namespace PackageReferenceEditor.Avalonia
         public override void Initialize()
         {
             AvaloniaXamlLoader.Load(this);
-        }
-
-        public void Start()
-        {
-            var window = new MainWindow();
-            window.ShowDialog();
-            Run(window);
         }
     }
 }
