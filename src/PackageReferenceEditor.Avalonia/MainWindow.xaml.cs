@@ -8,16 +8,18 @@ namespace PackageReferenceEditor.Avalonia
 {
     public partial class MainWindow : Window
     {
-        private TextBox textSearchPath;
-        private TextBox textSearchPattern;
-
         public MainWindow()
         {
             this.InitializeComponent();
             this.AttachDevTools();
 
-            textSearchPath = this.FindControl<TextBox>("textSearchPath");
-            textSearchPattern = this.FindControl<TextBox>("textSearchPattern");
+            var patterns = this.FindControl<DropDown>("patterns");
+            var textSearchPattern = this.FindControl<TextBox>("textSearchPattern");
+
+            patterns.SelectionChanged += (sender, e) =>
+            {
+                textSearchPattern.Text = (patterns.SelectedItem as DropDownItem).Content as string;
+            };
         }
 
         private void InitializeComponent()
@@ -33,6 +35,7 @@ namespace PackageReferenceEditor.Avalonia
                 var path = await dlg.ShowAsync(this);
                 if (!string.IsNullOrWhiteSpace(path))
                 {
+                    var textSearchPath = this.FindControl<TextBox>("textSearchPath");
                     textSearchPath.Text = path;
                 }
             }
@@ -49,7 +52,13 @@ namespace PackageReferenceEditor.Avalonia
             {
                 if (DataContext is UpdaterResult result)
                 {
-                    result.FindReferences(textSearchPath.Text, textSearchPattern.Text, new string[] { });
+                    var textSearchPath = this.FindControl<TextBox>("textSearchPath");
+                    var textSearchPattern = this.FindControl<TextBox>("textSearchPattern");
+                    result.Reset();
+                    result.FindReferences(
+                        textSearchPath.Text,
+                        textSearchPattern.Text,
+                        new string[] { });
                 }
             }
             catch (Exception ex)
