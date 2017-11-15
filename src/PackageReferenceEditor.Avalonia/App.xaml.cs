@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Xml.Linq;
 using Avalonia;
 using Avalonia.Logging.Serilog;
 using Avalonia.Markup.Xaml;
-using Serilog;
 
 namespace PackageReferenceEditor.Avalonia
 {
