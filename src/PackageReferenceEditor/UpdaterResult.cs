@@ -7,8 +7,8 @@ namespace PackageReferenceEditor
     {
         private IList<XDocument> _documents;
         private IList<PackageReference> _references;
-        private Dictionary<string, List<PackageReference>> _groupedReferences;
-        private KeyValuePair<string, List<PackageReference>> _currentReferences;
+        private Dictionary<string, IList<PackageReference>> _groupedReferences;
+        private KeyValuePair<string, IList<PackageReference>> _currentReferences;
         private PackageReference _currentReference;
 
         public IList<XDocument> Documents
@@ -23,13 +23,13 @@ namespace PackageReferenceEditor
             set => Update(ref _references, value);
         }
 
-        public Dictionary<string, List<PackageReference>> GroupedReferences
+        public Dictionary<string, IList<PackageReference>> GroupedReferences
         {
             get => _groupedReferences;
             set => Update(ref _groupedReferences, value);
         }
 
-        public KeyValuePair<string, List<PackageReference>> CurrentReferences
+        public KeyValuePair<string, IList<PackageReference>> CurrentReferences
         {
             get => _currentReferences;
             set => Update(ref _currentReferences, value);

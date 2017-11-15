@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Xml.Linq;
 using Avalonia;
 using Avalonia.Logging.Serilog;
@@ -16,8 +17,8 @@ namespace PackageReferenceEditor.Avalonia
                 .UsePlatformDetect()
                 .Start<MainWindow>(() => new UpdaterResult()
                 {
-                    Documents = new List<XDocument>(),
-                    References = new List<PackageReference>()
+                    Documents = new ObservableCollection<XDocument>(),
+                    References = new ObservableCollection<PackageReference>()
                 });
         }
 

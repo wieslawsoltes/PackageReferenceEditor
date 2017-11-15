@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
@@ -51,7 +52,10 @@ namespace PackageReferenceEditor
         {
             FindReferences(searchPath, searchPattern, ignoredPaths, updater.References, updater.Documents);
 
-            updater.GroupedReferences = updater.References.GroupBy(x => x.Name).OrderBy(x => x.Key).ToDictionary(x => x.Key, x => x.ToList());
+            updater.GroupedReferences = updater.References
+                .GroupBy(x => x.Name)
+                .OrderBy(x => x.Key)
+                .ToDictionary(x => x.Key, x => (IList<PackageReference>)new ObservableCollection<PackageReference>(x));
             updater.CurrentReferences = updater.GroupedReferences.FirstOrDefault();
             updater.CurrentReference = updater.CurrentReferences.Value.FirstOrDefault();
 
@@ -62,8 +66,8 @@ namespace PackageReferenceEditor
         {
             return new UpdaterResult()
             {
-                Documents = new List<XDocument>(),
-                References = new List<PackageReference>()
+                Documents = new ObservableCollection<XDocument>(),
+                References = new ObservableCollection<PackageReference>()
             }
             .FindReferences(searchPath, searchPattern, ignoredPaths);
         }
@@ -131,7 +135,7 @@ namespace PackageReferenceEditor
             }
         }
 
-        public static void UpdateVersions(KeyValuePair<string, List<PackageReference>> package)
+        public static void UpdateVersions(KeyValuePair<string, IList<PackageReference>> package)
         {
             Console.WriteLine("Updating NuGet package dependencies versions:");
             foreach (var v in package.Value)
