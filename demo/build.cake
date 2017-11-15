@@ -1,4 +1,4 @@
-#addin "nuget:?package=PackageReferenceEditor&version=0.0.2"
+#addin "nuget:?package=PackageReferenceEditor&version=0.0.3"
 
 using PackageReferenceEditor;
 

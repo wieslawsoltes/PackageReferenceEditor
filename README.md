@@ -34,7 +34,7 @@ Same code can be used in C# programs by removing `#addin` directive and installi
 
 ### Print package versions
 ```C#
-#addin "nuget:?package=PackageReferenceEditor&version=0.0.2"
+#addin "nuget:?package=PackageReferenceEditor&version=0.0.3"
 
 using PackageReferenceEditor;
 
@@ -46,7 +46,7 @@ result.PrintVersions();
 ### Validate package versions
 
 ```C#
-#addin "nuget:?package=PackageReferenceEditor&version=0.0.2"
+#addin "nuget:?package=PackageReferenceEditor&version=0.0.3"
 
 using PackageReferenceEditor;
 
@@ -58,7 +58,7 @@ result.ValidateVersions();
 ### Update package version
 
 ```C#
-#addin "nuget:?package=PackageReferenceEditor&version=0.0.2"
+#addin "nuget:?package=PackageReferenceEditor&version=0.0.3"
 
 using PackageReferenceEditor;
 
