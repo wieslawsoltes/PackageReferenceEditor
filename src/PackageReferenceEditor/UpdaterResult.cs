@@ -40,5 +40,14 @@ namespace PackageReferenceEditor
             get => _currentReference;
             set => Update(ref _currentReference, value);
         }
+
+        public void Reset()
+        {
+            Documents?.Clear();
+            References?.Clear();
+            GroupedReferences?.Clear();
+            CurrentReferences = default(KeyValuePair<string, IList<PackageReference>>);
+            CurrentReference = default(PackageReference);
+        }
     }
 }
