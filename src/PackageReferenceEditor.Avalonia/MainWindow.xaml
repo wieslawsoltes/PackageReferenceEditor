@@ -13,7 +13,7 @@
             <ListBox x:Name="groups" Items="{Binding GroupedReferences}" Margin="2">
                 <ListBox.DataTemplates>
                     <DataTemplate>
-                        <TextBlock Text="{Binding Key}"/>
+                        <TextBlock Text="{Binding Key}" Margin="1"/>
                     </DataTemplate>
                 </ListBox.DataTemplates>
             </ListBox>
@@ -23,18 +23,17 @@
             <ListBox x:Name="references" Items="{Binding #groups.SelectedItem.Value}" Margin="2" Grid.Row="0">
                 <ListBox.DataTemplates>
                     <DataTemplate>
-                        <TextBlock Text="{Binding Version}"/>
+                        <StackPanel Margin="2">
+                            <TextBlock Text="{Binding Version}" Margin="1" HorizontalAlignment="Stretch"/>
+                            <TextBlock Text="{Binding FileName}" Foreground="{DynamicResource ThemeBorderMidBrush}" Margin="1" HorizontalAlignment="Stretch"/>
+                        </StackPanel>
                     </DataTemplate>
                 </ListBox.DataTemplates>
             </ListBox>
             <ContentPresenter Content="{Binding #references.SelectedItem}" Grid.Row="1">
                 <ContentPresenter.DataTemplates>
                     <DataTemplate>
-                        <StackPanel>
-                            <TextBlock Text="{Binding Name}" Margin="2" HorizontalAlignment="Stretch"/>
-                            <TextBox Text="{Binding Version}" Margin="2" HorizontalAlignment="Stretch"/>
-                            <TextBlock Text="{Binding FileName}" Margin="2" HorizontalAlignment="Stretch"/>
-                        </StackPanel>
+                        <TextBox Text="{Binding Version}" Margin="2"/>
                     </DataTemplate>
                 </ContentPresenter.DataTemplates>
             </ContentPresenter>
