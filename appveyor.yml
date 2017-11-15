@@ -33,7 +33,5 @@ artifacts:
   name: PackageReferenceEditor.Avalonia-ubuntu.14.04-x64
 - path: src\PackageReferenceEditor.Avalonia\bin\osx.10.12-x64
   name: PackageReferenceEditor.Avalonia-osx.10.12-x64
-- path: src\PackageReferenceEditor.WPF\bin\Release
-  name: PackageReferenceEditor.WPF
 - path: src\PackageReferenceEditor\bin\Release\*.nupkg
 deploy: off

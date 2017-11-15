@@ -11,7 +11,6 @@ MSBuild, csproj and props package reference editor.
 ## Screenshots
 
 ![](images/Avalonia.png)
-![](images/WPF.png)
 
 ## NuGet
 
