@@ -4,17 +4,14 @@
              UseLayoutRounding="True" Focusable="True">
     <Grid ColumnDefinitions="250,8,*" RowDefinitions="Auto,*">
         <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*,100,100" Margin="2" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
-            <TextBox x:Name="textSearchPath" Text="C:\DOWNLOADS\GitHub" Margin="2" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
+            <TextBox x:Name="textSearchPath" Text="{Binding SearchPath}" Margin="2" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
             <Button x:Name="buttonBrowse" Content="Browse" Click="buttonBrowse_Click" Margin="2" Grid.Row="0" Grid.Column="2"/>
-            <TextBox x:Name="textSearchPattern" Text="*.props" Margin="2" Grid.Row="1" Grid.Column="0"/>
-            <DropDown x:Name="patterns" SelectedIndex="0" Margin="2" Grid.Row="1" Grid.Column="1">
-                <DropDownItem>*.props</DropDownItem>
-                <DropDownItem>*.csproj</DropDownItem>
-            </DropDown>
+            <TextBox x:Name="textSearchPattern" Text="{Binding SearchPattern}" Margin="2" Grid.Row="1" Grid.Column="0"/>
+            <DropDown x:Name="patterns" Items="{Binding SearchPatterns}" SelectedItem="{Binding SearchPattern, Mode=OneWay}" Margin="2" Grid.Row="1" Grid.Column="1"/>
             <Button x:Name="buttonSearch" Content="Search" Click="buttonSearch_Click" Margin="2" Grid.Row="1" Grid.Column="2"/>
         </Grid>
         <Grid Margin="2" Grid.Row="1" Grid.Column="0">
-            <ListBox x:Name="groups" Items="{Binding GroupedReferences}" SelectedItem="{Binding CurrentReferences}" Margin="2">
+            <ListBox x:Name="groups" Items="{Binding Result.GroupedReferences}" SelectedItem="{Binding CurrentReferences}" Margin="2">
                 <ListBox.DataTemplates>
                     <DataTemplate>
                         <TextBlock Text="{Binding Key}" Margin="1"/>
@@ -23,7 +20,7 @@
             </ListBox>
         </Grid>
         <GridSplitter Width="8" Grid.Row="1" Grid.Column="1"/>
-        <Grid RowDefinitions="*,Auto,Auto" Margin="2" Grid.Row="1" Grid.Column="2">
+        <Grid RowDefinitions="*,Auto,Auto,Auto" Margin="2" Grid.Row="1" Grid.Column="2">
             <ListBox x:Name="references" Items="{Binding CurrentReferences.Value}" SelectedItem="{Binding CurrentReference}" Margin="2" Grid.Row="0">
                 <ListBox.DataTemplates>
                     <DataTemplate>
@@ -38,7 +35,18 @@
                 <TextBox Text="{Binding CurrentReference.Version}" Margin="2" Grid.Row="0" Grid.Column="0"/>
                 <Button x:Name="buttonConsolidate" Content="Consolidate" Click="buttonConsolidate_Click" Margin="2" Grid.Row="0" Grid.Column="1"/>
             </Grid>
-            <Button x:Name="buttonUpdate" Content="Update Files" Click="buttonUpdate_Click" Margin="2" Grid.Row="2"/>
+            <Grid RowDefinitions="Auto" ColumnDefinitions="50*,50*,100" Grid.Row="2">
+                <DropDown x:Name="versions" Items="{Binding Versions}" SelectedItem="{Binding CurrentVersion}" Margin="2" Grid.Row="1" Grid.Column="0"/>
+                <DropDown x:Name="feeds" Items="{Binding Feeds}" SelectedItem="{Binding CurrentFeed}" Margin="2" Grid.Row="1" Grid.Column="1">
+                    <DropDown.DataTemplates>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}" Margin="1"/>
+                        </DataTemplate>
+                    </DropDown.DataTemplates>
+                </DropDown>
+                <Button x:Name="buttonVersions" Content="Versions" Click="buttonVersions_Click" Margin="2" Grid.Row="0" Grid.Column="2"/>
+            </Grid>
+            <Button x:Name="buttonUpdate" Content="Update Files" Click="buttonUpdate_Click" Margin="2" Grid.Row="3"/>
         </Grid>
     </Grid>
 </UserControl>

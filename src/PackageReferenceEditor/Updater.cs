@@ -56,8 +56,6 @@ namespace PackageReferenceEditor
                 .GroupBy(x => x.Name)
                 .OrderBy(x => x.Key)
                 .ToDictionary(x => x.Key, x => (IList<PackageReference>)new ObservableCollection<PackageReference>(x));
-            updater.CurrentReferences = updater.GroupedReferences.FirstOrDefault();
-            updater.CurrentReference = updater.CurrentReferences.Value.FirstOrDefault();
 
             return updater;
         }

@@ -8,8 +8,6 @@ namespace PackageReferenceEditor
         private IList<XDocument> _documents;
         private IList<PackageReference> _references;
         private Dictionary<string, IList<PackageReference>> _groupedReferences;
-        private KeyValuePair<string, IList<PackageReference>> _currentReferences;
-        private PackageReference _currentReference;
 
         public IList<XDocument> Documents
         {
@@ -29,25 +27,11 @@ namespace PackageReferenceEditor
             set => Update(ref _groupedReferences, value);
         }
 
-        public KeyValuePair<string, IList<PackageReference>> CurrentReferences
-        {
-            get => _currentReferences;
-            set => Update(ref _currentReferences, value);
-        }
-
-        public PackageReference CurrentReference
-        {
-            get => _currentReference;
-            set => Update(ref _currentReference, value);
-        }
-
         public void Reset()
         {
             Documents?.Clear();
             References?.Clear();
             GroupedReferences?.Clear();
-            CurrentReferences = default(KeyValuePair<string, IList<PackageReference>>);
-            CurrentReference = default(PackageReference);
         }
     }
 }
