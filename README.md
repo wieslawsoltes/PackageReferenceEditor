@@ -38,9 +38,8 @@ Same code can be used in C# programs by removing `#addin` directive and installi
 
 using PackageReferenceEditor;
 
-var result = Updater.FindReferences("./build", "*.props", new string[] { });
-
-result.PrintVersions();		
+Updater.FindReferences("./build", "*.props", new string[] { }).PrintVersions();
+Updater.FindReferences("./", "*.csproj", new string[] { }).PrintVersions();	
 ```
 
 ### Validate package versions
@@ -50,9 +49,8 @@ result.PrintVersions();
 
 using PackageReferenceEditor;
 
-var result = Updater.FindReferences("./build", "*.props", new string[] { });
-	
-result.ValidateVersions();
+Updater.FindReferences("./build", "*.props", new string[] { }).ValidateVersions();
+Updater.FindReferences("./", "*.csproj", new string[] { }).ValidateVersions();
 ```
 
 ### Update package version
@@ -62,9 +60,7 @@ result.ValidateVersions();
 
 using PackageReferenceEditor;
 
-var result = Updater.FindReferences("./build", "*.props", new string[] { });
-
-result.UpdateVersions("Newtonsoft.Json", "10.0.3");
+Updater.FindReferences("./build", "*.props", new string[] { }).UpdateVersions("Newtonsoft.Json", "10.0.3");
 ```
 
 ### Get package versions
@@ -74,11 +70,8 @@ result.UpdateVersions("Newtonsoft.Json", "10.0.3");
 using PackageReferenceEditor;
 
 var result = Updater.FindReferences("./build", "*.props", new string[] { });
-
 result.ValidateVersions();
-
 var version = result.GroupedReferences["Newtonsoft.Json"].FirstOrDefault().Version;
-
 Information("Newtonsoft.Json package version: {0}", version);
 ```
 
