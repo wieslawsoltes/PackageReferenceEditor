@@ -21,9 +21,7 @@ Task("ValidateVersions")
 Task("UpdateVersions")
     .Does(() =>
 {
-    var result = Updater.FindReferences("./build", "*.props", new string[] { });
-    result.UpdateVersions("Avalonia", "0.5.2-build4248-alpha");
-    result.UpdateVersions("Avalonia.Desktop", "0.5.2-build4248-alpha");
+    Updater.FindReferences("./build", "*.props", new string[] { }).UpdateVersions("Newtonsoft.Json", "10.0.3");
 });
 
 Task("GetVersions")
