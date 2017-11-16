@@ -31,7 +31,7 @@ namespace PackageReferenceEditor.Avalonia.Views
             try
             {
                 var dlg = new OpenFolderDialog();
-                var path = await dlg.ShowAsync(this);
+                var path = await dlg.ShowAsync((Window)this.VisualRoot);
                 if (!string.IsNullOrWhiteSpace(path))
                 {
                     var textSearchPath = this.FindControl<TextBox>("textSearchPath");
