@@ -7,23 +7,32 @@ var target = Argument("target", "Default");
 Task("PrintVersions")
     .Does(() =>
 {
-    var result = Updater.FindReferences(@"C:\DOWNLOADS\GitHub", "*.props", new string[] { });
-    result.PrintVersions();	
+    Updater.FindReferences("./build", "*.props", new string[] { }).PrintVersions();
+    Updater.FindReferences("./", "*.csproj", new string[] { }).PrintVersions();
 });
 
 Task("ValidateVersions")
     .Does(() =>
 {
-    var result = Updater.FindReferences(@"C:\DOWNLOADS\GitHub", "*.props", new string[] { });	
-    result.ValidateVersions();
+    Updater.FindReferences("./build", "*.props", new string[] { }).ValidateVersions();
+    Updater.FindReferences("./", "*.csproj", new string[] { }).ValidateVersions();
 });
 
 Task("UpdateVersions")
     .Does(() =>
 {
-    var result = Updater.FindReferences(@"C:\DOWNLOADS\GitHub", "*.props", new string[] { });
+    var result = Updater.FindReferences("./build", "*.props", new string[] { });
     result.UpdateVersions("Avalonia", "0.5.2-build4248-alpha");
     result.UpdateVersions("Avalonia.Desktop", "0.5.2-build4248-alpha");
+});
+
+Task("GetVersions")
+    .Does(() =>
+{
+    var result = Updater.FindReferences("./build", "*.props", new string[] { });
+    result.ValidateVersions();
+    var version = result.GroupedReferences["Newtonsoft.Json"].FirstOrDefault().Version;
+    Information("Newtonsoft.Json package version: {0}", version);
 });
 
 Task("Default")
