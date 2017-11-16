@@ -34,7 +34,7 @@ Same code can be used in C# programs by removing `#addin` directive and installi
 
 ### Print package versions
 ```C#
-#addin "nuget:?package=PackageReferenceEditor&version=0.0.3"
+#addin "nuget:?package=PackageReferenceEditor&version=0.0.4"
 
 using PackageReferenceEditor;
 
@@ -45,7 +45,7 @@ Updater.FindReferences("./", "*.csproj", new string[] { }).PrintVersions();
 ### Validate package versions
 
 ```C#
-#addin "nuget:?package=PackageReferenceEditor&version=0.0.3"
+#addin "nuget:?package=PackageReferenceEditor&version=0.0.4"
 
 using PackageReferenceEditor;
 
@@ -56,7 +56,7 @@ Updater.FindReferences("./", "*.csproj", new string[] { }).ValidateVersions();
 ### Update package version
 
 ```C#
-#addin "nuget:?package=PackageReferenceEditor&version=0.0.3"
+#addin "nuget:?package=PackageReferenceEditor&version=0.0.4"
 
 using PackageReferenceEditor;
 
@@ -65,7 +65,7 @@ Updater.FindReferences("./build", "*.props", new string[] { }).UpdateVersions("N
 
 ### Get package versions
 ```C#
-#addin "nuget:?package=PackageReferenceEditor&version=0.0.3"
+#addin "nuget:?package=PackageReferenceEditor&version=0.0.4"
 
 using PackageReferenceEditor;
 
