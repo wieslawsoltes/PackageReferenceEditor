@@ -38,7 +38,7 @@ Same code can be used in C# programs by removing `#addin` directive and installi
 
 using PackageReferenceEditor;
 
-var result = Updater.FindReferences(@"C:\GitHub\", "*.props", new string[] { });
+var result = Updater.FindReferences("./build", "*.props", new string[] { });
 
 result.PrintVersions();		
 ```
@@ -50,7 +50,7 @@ result.PrintVersions();
 
 using PackageReferenceEditor;
 
-var result = Updater.FindReferences(@"C:\GitHub\", "*.props", new string[] { });
+var result = Updater.FindReferences("./build", "*.props", new string[] { });
 	
 result.ValidateVersions();
 ```
@@ -62,9 +62,24 @@ result.ValidateVersions();
 
 using PackageReferenceEditor;
 
-var result = Updater.FindReferences(@"C:\GitHub\", "*.props", new string[] { });
+var result = Updater.FindReferences("./build", "*.props", new string[] { });
 
 result.UpdateVersions("Newtonsoft.Json", "10.0.3");
+```
+
+### Get package versions
+```C#
+#addin "nuget:?package=PackageReferenceEditor&version=0.0.3"
+
+using PackageReferenceEditor;
+
+var result = Updater.FindReferences("./build", "*.props", new string[] { });
+
+result.ValidateVersions();
+
+var version = result.GroupedReferences["Newtonsoft.Json"].FirstOrDefault().Version;
+
+Information("Newtonsoft.Json package version: {0}", version);
 ```
 
 ## Resources
