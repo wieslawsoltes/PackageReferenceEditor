@@ -20,9 +20,7 @@
   <ItemGroup Condition="'$(TargetFramework)' == 'net45'">
     <Reference Include="System.Net.Http" />
   </ItemGroup>
-    
-  <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
-  </ItemGroup>
+
+  <Import Project="$(MSBuildThisFileDirectory)..\..\build\Newtonsoft.Json.props" />
 
 </Project>
