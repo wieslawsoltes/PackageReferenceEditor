@@ -6,7 +6,20 @@
 
 [![NuGet](https://img.shields.io/nuget/v/PackageReferenceEditor.svg)](https://www.nuget.org/packages/PackageReferenceEditor)
 
+[![Github All Releases](https://img.shields.io/github/downloads/wieslawsoltes/packagereferenceeditor/total.svg)](https://github.com/wieslawsoltes/packagereferenceeditor)
+[![GitHub release](https://img.shields.io/github/release/wieslawsoltes/packagereferenceeditor.svg)](https://github.com/wieslawsoltes/packagereferenceeditor)
+[![Github Releases](https://img.shields.io/github/downloads/wieslawsoltes/packagereferenceeditor/latest/total.svg)](https://github.com/wieslawsoltes/packagereferenceeditor)
+
 MSBuild, csproj and props package reference editor.
+
+## Downloads
+
+| Platform              | Type        | Version       | Download                                                                                                                                                                                        |
+|-----------------------|-------------|---------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| All                   | NuGet       | 0.0.4         | [PackageReferenceEditor.0.0.4.nupkg](https://github.com/wieslawsoltes/packagereferenceeditor/releases/download/0.0.4/PackageReferenceEditor.0.0.4.nupkg)                                        |
+| osx.10.12-x64         | Portable    | 0.0.4         | [PackageReferenceEditor.Avalonia-osx.10.12-x64.zip](https://github.com/wieslawsoltes/packagereferenceeditor/releases/download/0.0.4/PackageReferenceEditor.Avalonia-osx.10.12-x64.zip)          |
+| ubuntu.14.04-x64      | Portable    | 0.0.4         | [PackageReferenceEditor.Avalonia-ubuntu.14.04-x64.zip](https://github.com/wieslawsoltes/packagereferenceeditor/releases/download/0.0.4/PackageReferenceEditor.Avalonia-ubuntu.14.04-x64.zip)    |
+| win7-x64              | Portable    | 0.0.4         | [PackageReferenceEditor.Avalonia-win7-x64.zip](https://github.com/wieslawsoltes/packagereferenceeditor/releases/download/0.0.4/PackageReferenceEditor.Avalonia-win7-x64.zip)                    |
 
 ## Screenshots
 
