@@ -88,6 +88,18 @@ var version = result.GroupedReferences["Newtonsoft.Json"].FirstOrDefault().Versi
 Information("Newtonsoft.Json package version: {0}", version);
 ```
 
+### Get NuGet versions
+```C#
+#addin "nuget:?package=PackageReferenceEditor&version=0.0.4"
+
+using PackageReferenceEditor;
+using System.Linq;
+
+var versions = NuGetApi.GetPackageVersions("https://api.nuget.org/v3/index.json", "Newtonsoft.Json").Result;
+var latestVersion = versions.Reverse().FirstOrDefault();
+Information("Newtonsoft.Json package latest version: {0}", latestVersion);
+```
+
 ## Resources
 
 * [GitHub source code repository.](https://github.com/wieslawsoltes/PackageReferenceEditor)
