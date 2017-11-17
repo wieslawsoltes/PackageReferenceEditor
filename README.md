@@ -76,7 +76,7 @@ using PackageReferenceEditor;
 Updater.FindReferences("./build", "*.props", new string[] { }).UpdateVersions("Newtonsoft.Json", "10.0.3");
 ```
 
-### Get package versions
+### Get installed package versions
 ```C#
 #addin "nuget:?package=PackageReferenceEditor&version=0.0.4"
 
@@ -88,7 +88,7 @@ var version = result.GroupedReferences["Newtonsoft.Json"].FirstOrDefault().Versi
 Information("Newtonsoft.Json package version: {0}", version);
 ```
 
-### Get NuGet versions
+### Get available package versions
 ```C#
 #addin "nuget:?package=PackageReferenceEditor&version=0.0.4"
 
