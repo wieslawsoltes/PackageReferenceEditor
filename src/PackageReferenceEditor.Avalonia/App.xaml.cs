@@ -13,6 +13,11 @@ namespace PackageReferenceEditor.Avalonia
 {
     public class App : Application
     {
+        public static AppBuilder BuildAvaloniaApp()
+            => AppBuilder.Configure<App>()
+                         .UsePlatformDetect()
+                         .LogToDebug();
+
         static void Main(string[] args)
         {
             MainViewModel vm = null;
@@ -61,11 +66,7 @@ namespace PackageReferenceEditor.Avalonia
                 References = new ObservableCollection<PackageReference>()
             };
 
-            var app = new App();
-            AppBuilder.Configure(app)
-                .LogToTrace()
-                .UsePlatformDetect()
-                .Start<MainWindow>(() => vm);
+            BuildAvaloniaApp().Start<MainWindow>(() => vm);
 
             try
             {
