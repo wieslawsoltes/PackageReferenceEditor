@@ -16,10 +16,10 @@ MSBuild, csproj and props package reference editor.
 
 | Platform              | Type        | Version       | Download                                                                                                                                                                                        |
 |-----------------------|-------------|---------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| All                   | NuGet       | 0.0.4         | [PackageReferenceEditor.0.0.4.nupkg](https://github.com/wieslawsoltes/packagereferenceeditor/releases/download/0.0.4/PackageReferenceEditor.0.0.4.nupkg)                                        |
-| osx.10.12-x64         | Portable    | 0.0.4         | [PackageReferenceEditor.Avalonia-osx.10.12-x64.zip](https://github.com/wieslawsoltes/packagereferenceeditor/releases/download/0.0.4/PackageReferenceEditor.Avalonia-osx.10.12-x64.zip)          |
-| ubuntu.14.04-x64      | Portable    | 0.0.4         | [PackageReferenceEditor.Avalonia-ubuntu.14.04-x64.zip](https://github.com/wieslawsoltes/packagereferenceeditor/releases/download/0.0.4/PackageReferenceEditor.Avalonia-ubuntu.14.04-x64.zip)    |
-| win7-x64              | Portable    | 0.0.4         | [PackageReferenceEditor.Avalonia-win7-x64.zip](https://github.com/wieslawsoltes/packagereferenceeditor/releases/download/0.0.4/PackageReferenceEditor.Avalonia-win7-x64.zip)                    |
+| All                   | NuGet       | 0.0.5         | [PackageReferenceEditor.0.0.5.nupkg](https://github.com/wieslawsoltes/packagereferenceeditor/releases/download/0.0.5/PackageReferenceEditor.0.0.5.nupkg)                                        |
+| osx.10.12-x64         | Portable    | 0.0.5         | [PackageReferenceEditor.Avalonia-osx.10.12-x64.zip](https://github.com/wieslawsoltes/packagereferenceeditor/releases/download/0.0.5/PackageReferenceEditor.Avalonia-osx.10.12-x64.zip)          |
+| ubuntu.14.04-x64      | Portable    | 0.0.5         | [PackageReferenceEditor.Avalonia-ubuntu.14.04-x64.zip](https://github.com/wieslawsoltes/packagereferenceeditor/releases/download/0.0.5/PackageReferenceEditor.Avalonia-ubuntu.14.04-x64.zip)    |
+| win7-x64              | Portable    | 0.0.5         | [PackageReferenceEditor.Avalonia-win7-x64.zip](https://github.com/wieslawsoltes/packagereferenceeditor/releases/download/0.0.5/PackageReferenceEditor.Avalonia-win7-x64.zip)                    |
 
 ## Screenshots
 
@@ -47,7 +47,7 @@ Same code can be used in C# programs by removing `#addin` directive and installi
 
 ### Print package versions
 ```C#
-#addin "nuget:?package=PackageReferenceEditor&version=0.0.4"
+#addin "nuget:?package=PackageReferenceEditor&version=0.0.5"
 
 using PackageReferenceEditor;
 
@@ -58,7 +58,7 @@ Updater.FindReferences("./", "*.csproj", new string[] { }).PrintVersions();
 ### Validate package versions
 
 ```C#
-#addin "nuget:?package=PackageReferenceEditor&version=0.0.4"
+#addin "nuget:?package=PackageReferenceEditor&version=0.0.5"
 
 using PackageReferenceEditor;
 
@@ -69,7 +69,7 @@ Updater.FindReferences("./", "*.csproj", new string[] { }).ValidateVersions();
 ### Update package version
 
 ```C#
-#addin "nuget:?package=PackageReferenceEditor&version=0.0.4"
+#addin "nuget:?package=PackageReferenceEditor&version=0.0.5"
 
 using PackageReferenceEditor;
 
@@ -78,7 +78,7 @@ Updater.FindReferences("./build", "*.props", new string[] { }).UpdateVersions("N
 
 ### Get installed package versions
 ```C#
-#addin "nuget:?package=PackageReferenceEditor&version=0.0.4"
+#addin "nuget:?package=PackageReferenceEditor&version=0.0.5"
 
 using PackageReferenceEditor;
 
@@ -90,7 +90,7 @@ Information("Newtonsoft.Json package version: {0}", version);
 
 ### Get available package versions
 ```C#
-#addin "nuget:?package=PackageReferenceEditor&version=0.0.4"
+#addin "nuget:?package=PackageReferenceEditor&version=0.0.5"
 
 using PackageReferenceEditor;
 using System.Linq;
