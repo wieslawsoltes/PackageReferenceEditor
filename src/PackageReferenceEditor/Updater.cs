@@ -122,7 +122,7 @@ namespace PackageReferenceEditor
                     var versionElement = v.Reference.Elements().First(x => x.Name.LocalName == "Version");
                     if (versionElement != null)
                     {
-                        if (version != v.VersionAttribute.Value)
+                        if (version != versionElement.Value)
                         {
                             Console.WriteLine($"Name: {name}, old: {versionElement.Value}, new: {version}, file: {v.FileName}");
                             versionElement.Value = version;
@@ -152,7 +152,7 @@ namespace PackageReferenceEditor
                     var versionElement = v.Reference.Elements().First(x => x.Name.LocalName == "Version");
                     if (versionElement != null)
                     {
-                        if (v.Version != v.VersionAttribute.Value)
+                        if (v.Version != versionElement.Value)
                         {
                             Console.WriteLine($"Name: {package.Key}, old: {versionElement.Value}, new: {v.Version}, file: {v.FileName}");
                             versionElement.Value = v.Version;
