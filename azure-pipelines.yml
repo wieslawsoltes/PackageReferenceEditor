@@ -30,9 +30,13 @@ jobs:
   - task: DotNetCoreInstaller@0
     inputs:
       version: '2.1.401'
+  - task: NuGetCommand@2
+    inputs:
+      command: 'restore'
+      restoreSolution: '**/*.sln'
   - task: MSBuild@1
     inputs:
-      solution: 'PackageReferenceEditor.sln' 
+      solution: '**/*.sln'
       platform: 'Any CPU'
       configuration: 'Release'
       restoreNugetPackages: true
