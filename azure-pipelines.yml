@@ -39,4 +39,3 @@ jobs:
       solution: '**/*.sln'
       platform: 'Any CPU'
       configuration: 'Release'
-      restoreNugetPackages: true
