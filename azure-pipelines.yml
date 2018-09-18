@@ -26,16 +26,20 @@ jobs:
 - job: Windows
   pool:
     vmImage: 'vs2017-win2017'
+  variables:
+    solution: '**/*.sln'
+    buildPlatform: 'Any CPU'
+    buildConfiguration: 'Release'
   steps:
   - task: DotNetCoreInstaller@0
     inputs:
       version: '2.1.401'
+  - task: NuGetToolInstaller@0
   - task: NuGetCommand@2
     inputs:
-      command: 'restore'
-      restoreSolution: '**/*.sln'
-  - task: MSBuild@1
+      restoreSolution: '$(solution)'
+  - task: VSBuild@1
     inputs:
-      solution: '**/*.sln'
-      platform: 'Any CPU'
-      configuration: 'Release'
+      solution: '$(solution)'
+      platform: '$(buildPlatform)'
+      configuration: '$(buildConfiguration)'
