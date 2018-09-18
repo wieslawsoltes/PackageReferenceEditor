@@ -39,7 +39,7 @@ jobs:
     inputs:
       restoreSolution: '$(solution)'
       feedsToUse: 'config'
-      nugetConfigPath: 'NuGet.config'
+      nugetConfigPath: 'NuGet.Config'
   - task: VSBuild@1
     inputs:
       solution: '$(solution)'
