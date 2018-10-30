@@ -46,6 +46,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "props", "props", "{B8ACA4FA
 		build\Rx.props = build\Rx.props
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{8A8848E4-0FF5-45C2-84AF-4B9A0F6172C3}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE.TXT = LICENSE.TXT
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +77,7 @@ Global
 		{9B3906D9-4904-45D0-B183-C8A1742D89A0} = {49F71003-4C84-42F3-A10A-6E2CA97DA1DB}
 		{51951E55-3B76-47D8-8E62-6E01E3F5DEAD} = {49F71003-4C84-42F3-A10A-6E2CA97DA1DB}
 		{B8ACA4FA-8593-4605-AE54-E047FB91C176} = {49F71003-4C84-42F3-A10A-6E2CA97DA1DB}
+		{8A8848E4-0FF5-45C2-84AF-4B9A0F6172C3} = {49F71003-4C84-42F3-A10A-6E2CA97DA1DB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {33B60D57-896D-43D2-A23B-244BADB28D81}
