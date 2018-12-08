@@ -5,7 +5,7 @@ jobs:
   steps:
   - task: DotNetCoreInstaller@0
     inputs:
-      version: '2.1.401'
+      version: '2.1.500'
   - bash: ./build.sh
     env:
       COREHOST_TRACE: 0
@@ -17,7 +17,7 @@ jobs:
   steps:
   - task: DotNetCoreInstaller@0
     inputs:
-      version: '2.1.401'
+      version: '2.1.500'
   - bash: ./build.sh
     env:
       COREHOST_TRACE: 0
@@ -33,7 +33,7 @@ jobs:
   steps:
   - task: DotNetCoreInstaller@0
     inputs:
-      version: '2.1.401'
+      version: '2.1.500'
   - task: NuGetToolInstaller@0
   - task: NuGetCommand@2
     inputs:
