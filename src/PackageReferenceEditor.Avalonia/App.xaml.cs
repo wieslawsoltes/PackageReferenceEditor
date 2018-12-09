@@ -28,9 +28,9 @@ namespace PackageReferenceEditor.Avalonia
                     File.ReadAllText("settings.json"),
                     new JsonSerializerSettings() { PreserveReferencesHandling = PreserveReferencesHandling.Objects });
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-#if DEBUG
+#if _DEBUG
                 Console.WriteLine(ex.Message);
                 Console.WriteLine(ex.StackTrace);
 #endif
@@ -76,9 +76,9 @@ namespace PackageReferenceEditor.Avalonia
                     new JsonSerializerSettings() { PreserveReferencesHandling = PreserveReferencesHandling.Objects });
                 File.WriteAllText("settings.json", settings);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-#if DEBUG
+#if _DEBUG
                 Console.WriteLine(ex.Message);
                 Console.WriteLine(ex.StackTrace);
 #endif
