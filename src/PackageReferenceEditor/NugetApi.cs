@@ -35,7 +35,7 @@ namespace PackageReferenceEditor
             var jsonIndex = await GetJson(urlIndex);
             if (jsonIndex != null)
             {
-                JObject objectIndex = JsonConvert.DeserializeObject<JObject>(jsonIndex);
+                var objectIndex = JsonConvert.DeserializeObject<JObject>(jsonIndex);
                 var urlTemplate = (string)objectIndex["resources"].FirstOrDefault(x => (string)x["@type"] == "PackageBaseAddress/3.0.0")["@id"];
                 Logger.Log($"Template: {urlTemplate}");
 
@@ -44,7 +44,7 @@ namespace PackageReferenceEditor
                 var jsonVersions = await GetJson(urlVersions);
                 if (jsonVersions != null)
                 {
-                    JObject objectVersions = JsonConvert.DeserializeObject<JObject>(jsonVersions);
+                    var objectVersions = JsonConvert.DeserializeObject<JObject>(jsonVersions);
                     var versions = objectVersions["versions"].Select(x => (string)x).ToList();
                     Logger.Log($"Latest Version: {packageName}: {versions.LastOrDefault()}");
                     return versions;
