@@ -2,7 +2,6 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
-using PackageReferenceEditor.Avalonia.ViewModels;
 
 namespace PackageReferenceEditor.Avalonia.Views
 {
@@ -21,7 +20,7 @@ namespace PackageReferenceEditor.Avalonia.Views
 
         private void patterns_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (DataContext is MainViewModel vm)
+            if (DataContext is ReferenceEditor vm)
             {
                 vm.SearchPattern = this.FindControl<DropDown>("patterns").SelectedItem as string;
             }
@@ -31,7 +30,7 @@ namespace PackageReferenceEditor.Avalonia.Views
         {
             try
             {
-                if (DataContext is MainViewModel vm)
+                if (DataContext is ReferenceEditor vm)
                 {
                     var dlg = new OpenFolderDialog();
                     var path = await dlg.ShowAsync((Window)this.VisualRoot);

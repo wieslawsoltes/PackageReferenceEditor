@@ -5,10 +5,10 @@ using System.Linq;
 using System.Runtime.Serialization;
 using ReactiveUI;
 
-namespace PackageReferenceEditor.Avalonia.ViewModels
+namespace PackageReferenceEditor
 {
     [DataContract]
-    public class MainViewModel : ReactiveObject
+    public class ReferenceEditor : ReactiveObject
     {
         private IList<Feed> _feeds;
         private Feed _currentFeed;
@@ -108,10 +108,7 @@ namespace PackageReferenceEditor.Avalonia.ViewModels
                 CurrentReference = default;
                 Versions = null;
                 CurrentVersion = null;
-                Result.FindReferences(
-                    SearchPath,
-                    SearchPattern,
-                    new string[] { });
+                Result.FindReferences(SearchPath, SearchPattern, new string[] { });
                 CurrentReferences = Result.GroupedReferences.FirstOrDefault();
                 CurrentReference = CurrentReferences.Value.FirstOrDefault();
             }

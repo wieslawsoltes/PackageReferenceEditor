@@ -7,7 +7,6 @@ using Avalonia;
 using Avalonia.Logging.Serilog;
 using Avalonia.Markup.Xaml;
 using Newtonsoft.Json;
-using PackageReferenceEditor.Avalonia.ViewModels;
 
 namespace PackageReferenceEditor.Avalonia
 {
@@ -15,11 +14,11 @@ namespace PackageReferenceEditor.Avalonia
     {
         static void Main(string[] args)
         {
-            MainViewModel vm = null;
+            ReferenceEditor vm = null;
 
             try
             {
-                vm = JsonConvert.DeserializeObject<MainViewModel>(
+                vm = JsonConvert.DeserializeObject<ReferenceEditor>(
                     File.ReadAllText("settings.json"),
                     new JsonSerializerSettings() { PreserveReferencesHandling = PreserveReferencesHandling.Objects });
             }
@@ -48,7 +47,7 @@ namespace PackageReferenceEditor.Avalonia
                     "*.csproj"
                 };
 
-                vm = new MainViewModel()
+                vm = new ReferenceEditor()
                 {
                     Feeds = feeds,
                     CurrentFeed = feeds.FirstOrDefault(),
