@@ -15,6 +15,7 @@
 
   <Import Project="..\..\build\Base.props" />
   <Import Project="..\..\build\Newtonsoft.Json.props" />
+  <Import Project="..\..\build\ReactiveUI.props" />
 
   <ItemGroup>
     <Compile Include="**\*.cs" Exclude="obj\**" />
