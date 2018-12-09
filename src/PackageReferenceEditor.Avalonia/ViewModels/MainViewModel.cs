@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Runtime.Serialization;
 using ReactiveUI;
 
@@ -94,6 +97,111 @@ namespace PackageReferenceEditor.Avalonia.ViewModels
         {
             get => _alwaysUpdate;
             set => this.RaiseAndSetIfChanged(ref _alwaysUpdate, value);
+        }
+
+        public void Search()
+        {
+            try
+            {
+                Result.Reset();
+                CurrentReferences = default;
+                CurrentReference = default;
+                Versions = null;
+                CurrentVersion = null;
+                Result.FindReferences(
+                    SearchPath,
+                    SearchPattern,
+                    new string[] { });
+                CurrentReferences = Result.GroupedReferences.FirstOrDefault();
+                CurrentReference = CurrentReferences.Value.FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                Logger.Log(ex.Message);
+                Logger.Log(ex.StackTrace);
+            }
+        }
+
+        public void ConsolidateVersions()
+        {
+            try
+            {
+                foreach (var reference in CurrentReferences.Value)
+                {
+                    if (reference != CurrentReference)
+                    {
+                        reference.Version = CurrentReference.Version;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Log(ex.Message);
+                Logger.Log(ex.StackTrace);
+            }
+        }
+
+        public void UseVersion()
+        {
+            try
+            {
+                if (CurrentReference != null)
+                {
+                    CurrentReference.Version = CurrentVersion;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Log(ex.Message);
+                Logger.Log(ex.StackTrace);
+            }
+        }
+
+        public async void GetVersions()
+        {
+            try
+            {
+                var versions = await NuGetApi.GetPackageVersions(CurrentFeed.Uri, CurrentReferences.Key);
+                if (versions != null)
+                {
+                    Versions = new ObservableCollection<string>(versions.Reverse());
+                    CurrentVersion = Versions.FirstOrDefault();
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Log(ex.Message);
+                Logger.Log(ex.StackTrace);
+            }
+        }
+
+        public void UpdateCurrent()
+        {
+            try
+            {
+                Updater.UpdateVersions(CurrentReferences, AlwaysUpdate);
+            }
+            catch (Exception ex)
+            {
+                Logger.Log(ex.Message);
+                Logger.Log(ex.StackTrace);
+            }
+        }
+
+        public void UpdateAll()
+        {
+            try
+            {
+                foreach (var references in Result.GroupedReferences)
+                {
+                    Updater.UpdateVersions(references, AlwaysUpdate);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Log(ex.Message);
+                Logger.Log(ex.StackTrace);
+            }
         }
     }
 }

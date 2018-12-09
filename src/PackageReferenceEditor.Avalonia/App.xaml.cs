@@ -13,11 +13,6 @@ namespace PackageReferenceEditor.Avalonia
 {
     public class App : Application
     {
-        public static AppBuilder BuildAvaloniaApp()
-            => AppBuilder.Configure<App>()
-                         .UsePlatformDetect()
-                         .LogToDebug();
-
         static void Main(string[] args)
         {
             MainViewModel vm = null;
@@ -28,12 +23,10 @@ namespace PackageReferenceEditor.Avalonia
                     File.ReadAllText("settings.json"),
                     new JsonSerializerSettings() { PreserveReferencesHandling = PreserveReferencesHandling.Objects });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-#if _DEBUG
-                Console.WriteLine(ex.Message);
-                Console.WriteLine(ex.StackTrace);
-#endif
+                Logger.Log(ex.Message);
+                Logger.Log(ex.StackTrace);
             }
 
             if (vm == null)
@@ -82,14 +75,17 @@ namespace PackageReferenceEditor.Avalonia
                     new JsonSerializerSettings() { PreserveReferencesHandling = PreserveReferencesHandling.Objects });
                 File.WriteAllText("settings.json", settings);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-#if _DEBUG
-                Console.WriteLine(ex.Message);
-                Console.WriteLine(ex.StackTrace);
-#endif
+                Logger.Log(ex.Message);
+                Logger.Log(ex.StackTrace);
             }
         }
+
+        public static AppBuilder BuildAvaloniaApp()
+            => AppBuilder.Configure<App>()
+                         .UsePlatformDetect()
+                         .LogToDebug();
 
         public override void Initialize()
         {

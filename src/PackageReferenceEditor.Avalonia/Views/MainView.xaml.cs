@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
@@ -14,21 +11,20 @@ namespace PackageReferenceEditor.Avalonia.Views
         public MainView()
         {
             InitializeComponent();
-
-            var patterns = this.FindControl<DropDown>("patterns");
-
-            patterns.SelectionChanged += (sender, e) =>
-            {
-                if (DataContext is MainViewModel vm)
-                {
-                    vm.SearchPattern = patterns.SelectedItem as string;
-                }
-            };
+            this.FindControl<DropDown>("patterns").SelectionChanged += patterns_SelectionChanged;
         }
 
         private void InitializeComponent()
         {
             AvaloniaXamlLoader.Load(this);
+        }
+
+        private void patterns_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (DataContext is MainViewModel vm)
+            {
+                vm.SearchPattern = this.FindControl<DropDown>("patterns").SelectedItem as string;
+            }
         }
 
         private async void buttonBrowse_Click(object sender, RoutedEventArgs e)
@@ -47,130 +43,8 @@ namespace PackageReferenceEditor.Avalonia.Views
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
-                Console.WriteLine(ex.StackTrace);
-            }
-        }
-
-        private void buttonSearch_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (DataContext is MainViewModel vm)
-                {
-                    vm.Result.Reset();
-                    vm.CurrentReferences = default(KeyValuePair<string, IList<PackageReference>>);
-                    vm.CurrentReference = default(PackageReference);
-                    vm.Versions = null;
-                    vm.CurrentVersion = null;
-                    vm.Result.FindReferences(
-                        vm.SearchPath,
-                        vm.SearchPattern,
-                        new string[] { });
-                    vm.CurrentReferences = vm.Result.GroupedReferences.FirstOrDefault();
-                    vm.CurrentReference = vm.CurrentReferences.Value.FirstOrDefault();
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                Console.WriteLine(ex.StackTrace);
-            }
-        }
-
-        private void buttonConsolidate_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (DataContext is MainViewModel vm)
-                {
-                    foreach (var reference in vm.CurrentReferences.Value)
-                    {
-                        if (reference != vm.CurrentReference)
-                        {
-                            reference.Version = vm.CurrentReference.Version;
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                Console.WriteLine(ex.StackTrace);
-            }
-        }
-
-        private async void buttonVersions_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (DataContext is MainViewModel vm)
-                {
-                    var versions = await NuGetApi.GetPackageVersions(vm.CurrentFeed.Uri, vm.CurrentReferences.Key);
-                    if (versions != null)
-                    {
-                        vm.Versions = new ObservableCollection<string>(versions.Reverse());
-                        vm.CurrentVersion = vm.Versions.FirstOrDefault();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                Console.WriteLine(ex.StackTrace);
-            }
-        }
-
-        private void buttonUseVersion_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (DataContext is MainViewModel vm)
-                {
-                    if (vm.CurrentReference != null)
-                    {
-                        vm.CurrentReference.Version = vm.CurrentVersion;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                Console.WriteLine(ex.StackTrace);
-            }
-        }
-
-        private void buttonUpdateCurrent_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (DataContext is MainViewModel vm)
-                {
-                    Updater.UpdateVersions(vm.CurrentReferences, vm.AlwaysUpdate);
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                Console.WriteLine(ex.StackTrace);
-            }
-        }
-        private void buttonUpdateAll_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (DataContext is MainViewModel vm)
-                {
-                    foreach (var references in vm.Result.GroupedReferences)
-                    {
-                        Updater.UpdateVersions(references, vm.AlwaysUpdate);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                Console.WriteLine(ex.StackTrace);
+                Logger.Log(ex.Message);
+                Logger.Log(ex.StackTrace);
             }
         }
     }
