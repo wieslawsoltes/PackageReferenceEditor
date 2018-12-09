@@ -14,6 +14,7 @@ namespace PackageReferenceEditor.Avalonia.ViewModels
         private UpdaterResult _result;
         private KeyValuePair<string, IList<PackageReference>> _currentReferences;
         private PackageReference _currentReference;
+        private bool _alwaysUpdate;
 
         public IList<Feed> Feeds
         {
@@ -75,6 +76,12 @@ namespace PackageReferenceEditor.Avalonia.ViewModels
             set => Update(ref _currentReference, value);
         }
 
+        public bool AlwaysUpdate
+        {
+            get => _alwaysUpdate;
+            set => Update(ref _alwaysUpdate, value);
+        }
+
         public bool ShouldSerializeFeeds() => true;
 
         public bool ShouldSerializeCurrentFeed() => true;
@@ -94,5 +101,7 @@ namespace PackageReferenceEditor.Avalonia.ViewModels
         public bool ShouldSerializeCurrentReferences() => false;
 
         public bool ShouldSerializeCurrentReference() => false;
+
+        public bool ShouldSerializeAlwaysUpdate() => true;
     }
 }

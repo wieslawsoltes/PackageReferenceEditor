@@ -133,14 +133,14 @@ namespace PackageReferenceEditor
             }
         }
 
-        public static void UpdateVersions(KeyValuePair<string, IList<PackageReference>> package)
+        public static void UpdateVersions(KeyValuePair<string, IList<PackageReference>> package, bool alwaysUpdate = false)
         {
-            Console.WriteLine("Updating NuGet package dependencies versions:");
+            Console.WriteLine($"Updating NuGet package dependencies versions for {package.Key}:");
             foreach (var v in package.Value)
             {
                 if (v.VersionAttribute != null)
                 {
-                    if (v.Version != v.VersionAttribute.Value)
+                    if (v.Version != v.VersionAttribute.Value || alwaysUpdate == true)
                     {
                         Console.WriteLine($"Name: {package.Key}, old: {v.VersionAttribute.Value}, new: {v.Version}, file: {v.FileName}");
                         v.VersionAttribute.Value = v.Version;
@@ -152,7 +152,7 @@ namespace PackageReferenceEditor
                     var versionElement = v.Reference.Elements().First(x => x.Name.LocalName == "Version");
                     if (versionElement != null)
                     {
-                        if (v.Version != versionElement.Value)
+                        if (v.Version != versionElement.Value || alwaysUpdate == true)
                         {
                             Console.WriteLine($"Name: {package.Key}, old: {versionElement.Value}, new: {v.Version}, file: {v.FileName}");
                             versionElement.Value = v.Version;
