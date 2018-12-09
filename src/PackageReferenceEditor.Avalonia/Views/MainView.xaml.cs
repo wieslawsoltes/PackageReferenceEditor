@@ -121,13 +121,31 @@ namespace PackageReferenceEditor.Avalonia.Views
             }
         }
 
-        private void buttonUpdate_Click(object sender, RoutedEventArgs e)
+        private void buttonUpdateCurrent_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 if (DataContext is MainViewModel vm)
                 {
-                    Updater.UpdateVersions(vm.CurrentReferences);
+                    Updater.UpdateVersions(vm.CurrentReferences, vm.AlwaysUpdate);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.StackTrace);
+            }
+        }
+        private void buttonUpdateAll_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (DataContext is MainViewModel vm)
+                {
+                    foreach (var references in vm.Result.GroupedReferences)
+                    {
+                        Updater.UpdateVersions(references, vm.AlwaysUpdate);
+                    }
                 }
             }
             catch (Exception ex)
