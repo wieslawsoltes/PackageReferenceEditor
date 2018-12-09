@@ -61,7 +61,8 @@ namespace PackageReferenceEditor.Avalonia
                     CurrentFeed = feeds.FirstOrDefault(),
                     SearchPath = @"C:\DOWNLOADS\GitHub",
                     SearchPatterns = patterns,
-                    SearchPattern = patterns.FirstOrDefault()
+                    SearchPattern = patterns.FirstOrDefault(),
+                    AlwaysUpdate = false
                 };
             }
 
