@@ -121,6 +121,25 @@ namespace PackageReferenceEditor.Avalonia.Views
             }
         }
 
+        private void buttonUseVersion_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (DataContext is MainViewModel vm)
+                {
+                    if (vm.CurrentReference != null)
+                    {
+                        vm.CurrentReference.Version = vm.CurrentVersion;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.StackTrace);
+            }
+        }
+
         private void buttonUpdateCurrent_Click(object sender, RoutedEventArgs e)
         {
             try

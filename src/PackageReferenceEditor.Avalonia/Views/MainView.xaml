@@ -36,16 +36,17 @@
                 <TextBox Text="{Binding CurrentReference.Version}" Margin="2" Grid.Row="0" Grid.Column="0"/>
                 <Button x:Name="buttonConsolidate" Content="Consolidate" Click="buttonConsolidate_Click" Margin="2" Grid.Row="0" Grid.Column="1"/>
             </Grid>
-            <Grid RowDefinitions="Auto" ColumnDefinitions="50*,50*,100" Grid.Row="2">
+            <Grid RowDefinitions="Auto" ColumnDefinitions="50*,100,50*,100" Grid.Row="2">
                 <DropDown x:Name="versions" Items="{Binding Versions}" SelectedItem="{Binding CurrentVersion}" Margin="2" Grid.Row="1" Grid.Column="0"/>
-                <DropDown x:Name="feeds" Items="{Binding Feeds}" SelectedItem="{Binding CurrentFeed}" Margin="2" Grid.Row="1" Grid.Column="1">
+                <Button x:Name="buttonUseVersion" Content="Use Version" Click="buttonUseVersion_Click" Margin="2" Grid.Row="0" Grid.Column="1"/>
+                <DropDown x:Name="feeds" Items="{Binding Feeds}" SelectedItem="{Binding CurrentFeed}" Margin="2" Grid.Row="1" Grid.Column="2">
                     <DropDown.DataTemplates>
                         <DataTemplate>
                             <TextBlock Text="{Binding Name}" Margin="1"/>
                         </DataTemplate>
                     </DropDown.DataTemplates>
                 </DropDown>
-                <Button x:Name="buttonVersions" Content="Versions" Click="buttonVersions_Click" Margin="2" Grid.Row="0" Grid.Column="2"/>
+                <Button x:Name="buttonVersions" Content="Get Versions" Click="buttonVersions_Click" Margin="2" Grid.Row="0" Grid.Column="3"/>
             </Grid>
             <CheckBox x:Name="alwaysUpdate" IsChecked="{Binding AlwaysUpdate}" Content="Always Update" Margin="2" Grid.Row="3"/>
             <Button x:Name="buttonUpdateCurrent" Content="Update Files" Click="buttonUpdateCurrent_Click" Margin="2" Grid.Row="4"/>
