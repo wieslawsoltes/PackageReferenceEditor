@@ -15,7 +15,7 @@ namespace PackageReferenceEditor.Avalonia.Views
             InitializeComponent();
             _dropDownPatterns = this.FindControl<DropDown>("dropDownPatterns");
             _dropDownPatterns.SelectionChanged += patterns_SelectionChanged;
-            _buttonBrowse= this.FindControl<Button>("buttonBrowse");
+            _buttonBrowse = this.FindControl<Button>("buttonBrowse");
             _buttonBrowse.Click += buttonBrowse_Click;
         }
 
