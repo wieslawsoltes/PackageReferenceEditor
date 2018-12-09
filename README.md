@@ -1,7 +1,6 @@
 # PackageReferenceEditor
 
-[![Build status](https://ci.appveyor.com/api/projects/status/42j9f6aylrv36ufs/branch/master?svg=true)](https://ci.appveyor.com/project/wieslawsoltes/packagereferenceeditor/branch/master)
-[![Build Status](https://dev.azure.com/wieslawsoltes/PackageReferenceEditor/_apis/build/status/wieslawsoltes.PackageReferenceEditor)](https://dev.azure.com/wieslawsoltes/PackageReferenceEditor/_build/latest?definitionId=1)
+[![Build status](https://dev.azure.com/wieslawsoltes/PackageReferenceEditor/_apis/build/status/PackageReferenceEditor)](https://dev.azure.com/wieslawsoltes/PackageReferenceEditor/_build/latest?definitionId=-1)
 
 [![NuGet](https://img.shields.io/nuget/v/PackageReferenceEditor.svg)](https://www.nuget.org/packages/PackageReferenceEditor)
 
