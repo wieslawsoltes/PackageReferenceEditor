@@ -22,7 +22,9 @@ Task("ValidateVersions")
 Task("UpdateVersions")
     .Does(() =>
 {
-    Updater.FindReferences("../build/", "*.props", new string[] { }).UpdateVersions("Newtonsoft.Json", "10.0.3");
+    var versions = NuGetApi.GetPackageVersions("https://api.nuget.org/v3/index.json", "Newtonsoft.Json").Result;
+    var latestVersion = versions.Reverse().FirstOrDefault();
+    Updater.FindReferences("../build/", "*.props", new string[] { }).UpdateVersions("Newtonsoft.Json", latestVersion);
 });
 
 Task("InstalledVersions")
