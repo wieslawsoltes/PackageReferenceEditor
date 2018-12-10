@@ -1,29 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
-using PackageReferenceEditor.Avalonia.ViewModels;
 
 namespace PackageReferenceEditor.Avalonia.Views
 {
     public class MainView : UserControl
     {
+        private readonly DropDown _dropDownPatterns;
+        private readonly Button _buttonBrowse;
+
         public MainView()
         {
             InitializeComponent();
-
-            var patterns = this.FindControl<DropDown>("patterns");
-
-            patterns.SelectionChanged += (sender, e) =>
-            {
-                if (DataContext is MainViewModel vm)
-                {
-                    vm.SearchPattern = patterns.SelectedItem as string;
-                }
-            };
+            _dropDownPatterns = this.FindControl<DropDown>("dropDownPatterns");
+            _dropDownPatterns.SelectionChanged += patterns_SelectionChanged;
+            _buttonBrowse = this.FindControl<Button>("buttonBrowse");
+            _buttonBrowse.Click += buttonBrowse_Click;
         }
 
         private void InitializeComponent()
@@ -31,11 +24,27 @@ namespace PackageReferenceEditor.Avalonia.Views
             AvaloniaXamlLoader.Load(this);
         }
 
+        private void patterns_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                if (DataContext is ReferenceEditor vm)
+                {
+                    vm.SearchPattern = _dropDownPatterns.SelectedItem as string;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Log(ex.Message);
+                Logger.Log(ex.StackTrace);
+            }
+        }
+
         private async void buttonBrowse_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                if (DataContext is MainViewModel vm)
+                if (DataContext is ReferenceEditor vm)
                 {
                     var dlg = new OpenFolderDialog();
                     var path = await dlg.ShowAsync((Window)this.VisualRoot);
@@ -47,93 +56,8 @@ namespace PackageReferenceEditor.Avalonia.Views
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
-                Console.WriteLine(ex.StackTrace);
-            }
-        }
-
-        private void buttonSearch_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (DataContext is MainViewModel vm)
-                {
-                    vm.Result.Reset();
-                    vm.CurrentReferences = default(KeyValuePair<string, IList<PackageReference>>);
-                    vm.CurrentReference = default(PackageReference);
-                    vm.Versions = null;
-                    vm.CurrentVersion = null;
-                    vm.Result.FindReferences(
-                        vm.SearchPath,
-                        vm.SearchPattern,
-                        new string[] { });
-                    vm.CurrentReferences = vm.Result.GroupedReferences.FirstOrDefault();
-                    vm.CurrentReference = vm.CurrentReferences.Value.FirstOrDefault();
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                Console.WriteLine(ex.StackTrace);
-            }
-        }
-
-        private void buttonConsolidate_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (DataContext is MainViewModel vm)
-                {
-                    foreach (var reference in vm.CurrentReferences.Value)
-                    {
-                        if (reference != vm.CurrentReference)
-                        {
-                            reference.Version = vm.CurrentReference.Version;
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                Console.WriteLine(ex.StackTrace);
-            }
-        }
-
-        private async void buttonVersions_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (DataContext is MainViewModel vm)
-                {
-                    var versions = await NuGetApi.GetPackageVersions(vm.CurrentFeed.Uri, vm.CurrentReferences.Key);
-                    if (versions != null)
-                    {
-                        vm.Versions = new ObservableCollection<string>(versions.Reverse());
-                        vm.CurrentVersion = vm.Versions.FirstOrDefault();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                Console.WriteLine(ex.StackTrace);
-            }
-        }
-
-        private void buttonUpdate_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (DataContext is MainViewModel vm)
-                {
-                    Updater.UpdateVersions(vm.CurrentReferences);
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                Console.WriteLine(ex.StackTrace);
+                Logger.Log(ex.Message);
+                Logger.Log(ex.StackTrace);
             }
         }
     }

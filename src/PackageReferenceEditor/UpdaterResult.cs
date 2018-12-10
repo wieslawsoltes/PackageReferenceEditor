@@ -1,30 +1,36 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Xml.Linq;
+using ReactiveUI;
 
 namespace PackageReferenceEditor
 {
-    public class UpdaterResult : NotifyObject
+    [DataContract]
+    public class UpdaterResult : ReactiveObject
     {
         private IList<XDocument> _documents;
         private IList<PackageReference> _references;
         private Dictionary<string, IList<PackageReference>> _groupedReferences;
 
+        [DataMember]
         public IList<XDocument> Documents
         {
             get => _documents;
-            set => Update(ref _documents, value);
+            set => this.RaiseAndSetIfChanged(ref _documents, value);
         }
 
+        [DataMember]
         public IList<PackageReference> References
         {
             get => _references;
-            set => Update(ref _references, value);
+            set => this.RaiseAndSetIfChanged(ref _references, value);
         }
 
+        [DataMember]
         public Dictionary<string, IList<PackageReference>> GroupedReferences
         {
             get => _groupedReferences;
-            set => Update(ref _groupedReferences, value);
+            set => this.RaiseAndSetIfChanged(ref _groupedReferences, value);
         }
 
         public void Reset()

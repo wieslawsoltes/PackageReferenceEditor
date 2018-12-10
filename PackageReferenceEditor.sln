@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27004.2009
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28315.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PackageReferenceEditor.Avalonia", "src\PackageReferenceEditor.Avalonia\PackageReferenceEditor.Avalonia.csproj", "{C53DAAF8-7153-4B1D-8B68-A16F91AAB835}"
 EndProject
@@ -14,15 +14,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{49F71003-4C84-42F3-A10A-6E2CA97DA1DB}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		.nuke = .nuke
 		build.ps1 = build.ps1
 		build.sh = build.sh
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ci", "ci", "{39DBA083-162E-4408-8B5D-48FC05DBA14F}"
-	ProjectSection(SolutionItems) = preProject
-		_config.yml = _config.yml
-		appveyor.yml = appveyor.yml
-		azure-pipelines.yml = azure-pipelines.yml
+		global.json = global.json
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "git", "git", "{9B3906D9-4904-45D0-B183-C8A1742D89A0}"
@@ -40,9 +35,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "props", "props", "{B8ACA4FA
 	ProjectSection(SolutionItems) = preProject
 		build\Avalonia.Desktop.props = build\Avalonia.Desktop.props
 		build\Avalonia.props = build\Avalonia.props
-		build\NETCore.props = build\NETCore.props
+		build\Base.props = build\Base.props
+		build\EmbedXaml.props = build\EmbedXaml.props
 		build\Newtonsoft.Json.props = build\Newtonsoft.Json.props
+		build\ReactiveUI.props = build\ReactiveUI.props
 		build\Rx.props = build\Rx.props
+		build\XUnit.props = build\XUnit.props
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{8A8848E4-0FF5-45C2-84AF-4B9A0F6172C3}"
@@ -50,6 +48,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{8A8848E4-0
 		LICENSE.TXT = LICENSE.TXT
 		README.md = README.md
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "build\build\_build.csproj", "{41CB9D2A-BCCC-4227-A9B9-6757FDD0E0B6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{38368485-AFBE-481D-9D39-CF7319AD5934}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PackageReferenceEditor.UnitTests", "tests\PackageReferenceEditor.UnitTests\PackageReferenceEditor.UnitTests.csproj", "{FCEA0F49-77EE-408F-A319-EFDDD3F9A9DD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,6 +69,14 @@ Global
 		{71EE73A0-FE62-4978-8F0D-140A8A72A1F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{71EE73A0-FE62-4978-8F0D-140A8A72A1F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{71EE73A0-FE62-4978-8F0D-140A8A72A1F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41CB9D2A-BCCC-4227-A9B9-6757FDD0E0B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41CB9D2A-BCCC-4227-A9B9-6757FDD0E0B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41CB9D2A-BCCC-4227-A9B9-6757FDD0E0B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41CB9D2A-BCCC-4227-A9B9-6757FDD0E0B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FCEA0F49-77EE-408F-A319-EFDDD3F9A9DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCEA0F49-77EE-408F-A319-EFDDD3F9A9DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCEA0F49-77EE-408F-A319-EFDDD3F9A9DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCEA0F49-77EE-408F-A319-EFDDD3F9A9DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -72,11 +84,11 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{C53DAAF8-7153-4B1D-8B68-A16F91AAB835} = {5B7FC42E-07EA-474F-8B8C-DAD199066922}
 		{71EE73A0-FE62-4978-8F0D-140A8A72A1F1} = {73210E6A-03C8-4FA2-8A8E-BF72B3E934C0}
-		{39DBA083-162E-4408-8B5D-48FC05DBA14F} = {49F71003-4C84-42F3-A10A-6E2CA97DA1DB}
 		{9B3906D9-4904-45D0-B183-C8A1742D89A0} = {49F71003-4C84-42F3-A10A-6E2CA97DA1DB}
 		{51951E55-3B76-47D8-8E62-6E01E3F5DEAD} = {49F71003-4C84-42F3-A10A-6E2CA97DA1DB}
 		{B8ACA4FA-8593-4605-AE54-E047FB91C176} = {49F71003-4C84-42F3-A10A-6E2CA97DA1DB}
-		{8A8848E4-0FF5-45C2-84AF-4B9A0F6172C3} = {49F71003-4C84-42F3-A10A-6E2CA97DA1DB}
+		{41CB9D2A-BCCC-4227-A9B9-6757FDD0E0B6} = {49F71003-4C84-42F3-A10A-6E2CA97DA1DB}
+		{FCEA0F49-77EE-408F-A319-EFDDD3F9A9DD} = {38368485-AFBE-481D-9D39-CF7319AD5934}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {33B60D57-896D-43D2-A23B-244BADB28D81}

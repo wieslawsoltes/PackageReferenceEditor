@@ -72,47 +72,47 @@ namespace PackageReferenceEditor
 
         public static void PrintVersions(this UpdaterResult result)
         {
-            Console.WriteLine("NuGet package dependencies versions:");
+            Logger.Log("NuGet package dependencies versions:");
             foreach (var package in result.GroupedReferences)
             {
-                Console.WriteLine($"Package {package.Key} is installed:");
+                Logger.Log($"Package {package.Key} is installed:");
                 foreach (var v in package.Value)
                 {
-                    Console.WriteLine($"{v.Version}, {v.FileName}");
+                    Logger.Log($"{v.Version}, {v.FileName}");
                 }
             }
         }
 
         public static void ValidateVersions(this UpdaterResult result)
         {
-            Console.WriteLine("Checking installed NuGet package dependencies versions:");
+            Logger.Log("Checking installed NuGet package dependencies versions:");
             foreach (var package in result.GroupedReferences)
             {
                 var packageVersion = package.Value.First().Version;
                 bool isValidVersion = package.Value.All(x => x.Version == packageVersion);
                 if (!isValidVersion)
                 {
-                    Console.WriteLine($"Error: package {package.Key} has multiple versions installed:");
+                    Logger.Log($"Error: package {package.Key} has multiple versions installed:");
                     foreach (var v in package.Value)
                     {
-                        Console.WriteLine($"{v.Version}, {v.FileName}");
+                        Logger.Log($"{v.Version}, {v.FileName}");
                     }
                     throw new Exception("Detected multiple NuGet package version installed for different projects.");
                 }
             };
-            Console.WriteLine("All NuGet package dependencies versions are valid.");
+            Logger.Log("All NuGet package dependencies versions are valid.");
         }
 
         public static void UpdateVersions(this UpdaterResult result, string name, string version)
         {
-            Console.WriteLine("Updating NuGet package dependencies versions:");
+            Logger.Log("Updating NuGet package dependencies versions:");
             foreach (var v in result.GroupedReferences[name])
             {
                 if (v.VersionAttribute != null)
                 {
                     if (version != v.VersionAttribute.Value)
                     {
-                        Console.WriteLine($"Name: {name}, old: {v.VersionAttribute.Value}, new: {version}, file: {v.FileName}");
+                        Logger.Log($"Name: {name}, old: {v.VersionAttribute.Value}, new: {version}, file: {v.FileName}");
                         v.VersionAttribute.Value = version;
                         v.Document.Save(v.FileName);
                     }
@@ -124,7 +124,7 @@ namespace PackageReferenceEditor
                     {
                         if (version != versionElement.Value)
                         {
-                            Console.WriteLine($"Name: {name}, old: {versionElement.Value}, new: {version}, file: {v.FileName}");
+                            Logger.Log($"Name: {name}, old: {versionElement.Value}, new: {version}, file: {v.FileName}");
                             versionElement.Value = version;
                             v.Document.Save(v.FileName);
                         }
@@ -133,16 +133,16 @@ namespace PackageReferenceEditor
             }
         }
 
-        public static void UpdateVersions(KeyValuePair<string, IList<PackageReference>> package)
+        public static void UpdateVersions(KeyValuePair<string, IList<PackageReference>> package, bool alwaysUpdate = false)
         {
-            Console.WriteLine("Updating NuGet package dependencies versions:");
+            Logger.Log($"Updating NuGet package dependencies versions for {package.Key}:");
             foreach (var v in package.Value)
             {
                 if (v.VersionAttribute != null)
                 {
-                    if (v.Version != v.VersionAttribute.Value)
+                    if (v.Version != v.VersionAttribute.Value || alwaysUpdate == true)
                     {
-                        Console.WriteLine($"Name: {package.Key}, old: {v.VersionAttribute.Value}, new: {v.Version}, file: {v.FileName}");
+                        Logger.Log($"Name: {package.Key}, old: {v.VersionAttribute.Value}, new: {v.Version}, file: {v.FileName}");
                         v.VersionAttribute.Value = v.Version;
                         v.Document.Save(v.FileName);
                     }
@@ -152,9 +152,9 @@ namespace PackageReferenceEditor
                     var versionElement = v.Reference.Elements().First(x => x.Name.LocalName == "Version");
                     if (versionElement != null)
                     {
-                        if (v.Version != versionElement.Value)
+                        if (v.Version != versionElement.Value || alwaysUpdate == true)
                         {
-                            Console.WriteLine($"Name: {package.Key}, old: {versionElement.Value}, new: {v.Version}, file: {v.FileName}");
+                            Logger.Log($"Name: {package.Key}, old: {versionElement.Value}, new: {v.Version}, file: {v.FileName}");
                             versionElement.Value = v.Version;
                             v.Document.Save(v.FileName);
                         }

@@ -1,14 +1,69 @@
-dotnet restore src/PackageReferenceEditor
-dotnet build src/PackageReferenceEditor/PackageReferenceEditor.csproj -c Release -f netstandard2.0
-dotnet pack src/PackageReferenceEditor/PackageReferenceEditor.csproj -c Release
+[CmdletBinding()]
+Param(
+    #[switch]$CustomParam,
+    [Parameter(Position=0,Mandatory=$false,ValueFromRemainingArguments=$true)]
+    [string[]]$BuildArguments
+)
 
-dotnet restore src/PackageReferenceEditor.Avalonia
-dotnet build src/PackageReferenceEditor.Avalonia/PackageReferenceEditor.Avalonia.csproj -c Release -f netcoreapp2.0
+Write-Output "Windows PowerShell $($Host.Version)"
 
-dotnet publish src/PackageReferenceEditor.Avalonia/PackageReferenceEditor.Avalonia.csproj -c Release -f netcoreapp2.0 -r win7-x64 -o bin/win7-x64
-Copy-Item "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Redist\MSVC\14.15.26706\x64\Microsoft.VC141.CRT\msvcp140.dll" src/PackageReferenceEditor.Avalonia/bin/win7-x64
-Copy-Item "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Redist\MSVC\14.15.26706\x64\Microsoft.VC141.CRT\vcruntime140.dll" src/PackageReferenceEditor.Avalonia/bin/win7-x64
-& "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\bin\HostX86\x86\editbin.exe" /subsystem:windows src/PackageReferenceEditor.Avalonia/bin/win7-x64/PackageReferenceEditor.Avalonia.exe
+Set-StrictMode -Version 2.0; $ErrorActionPreference = "Stop"; $ConfirmPreference = "None"; trap { exit 1 }
+$PSScriptRoot = Split-Path $MyInvocation.MyCommand.Path -Parent
 
-dotnet publish src/PackageReferenceEditor.Avalonia/PackageReferenceEditor.Avalonia.csproj -c Release -f netcoreapp2.0 -r ubuntu.14.04-x64 -o bin/ubuntu.14.04-x64
-dotnet publish src/PackageReferenceEditor.Avalonia/PackageReferenceEditor.Avalonia.csproj -c Release -f netcoreapp2.0 -r osx.10.12-x64 -o bin/osx.10.12-x64
+###########################################################################
+# CONFIGURATION
+###########################################################################
+
+$BuildProjectFile = "$PSScriptRoot\build\build\_build.csproj"
+$TempDirectory = "$PSScriptRoot\\.tmp"
+
+$DotNetGlobalFile = "$PSScriptRoot\\global.json"
+$DotNetInstallUrl = "https://raw.githubusercontent.com/dotnet/cli/master/scripts/obtain/dotnet-install.ps1"
+$DotNetChannel = "Current"
+
+$env:DOTNET_SKIP_FIRST_TIME_EXPERIENCE = 1
+$env:DOTNET_CLI_TELEMETRY_OPTOUT = 1
+$env:NUGET_XMLDOC_MODE = "skip"
+
+###########################################################################
+# EXECUTION
+###########################################################################
+
+function ExecSafe([scriptblock] $cmd) {
+    & $cmd
+    if ($LASTEXITCODE) { exit $LASTEXITCODE }
+}
+
+# If global.json exists, load expected version
+if (Test-Path $DotNetGlobalFile) {
+    $DotNetGlobal = $(Get-Content $DotNetGlobalFile | Out-String | ConvertFrom-Json)
+    if ($DotNetGlobal.PSObject.Properties["sdk"] -and $DotNetGlobal.sdk.PSObject.Properties["version"]) {
+        $DotNetVersion = $DotNetGlobal.sdk.version
+    }
+}
+
+# If dotnet is installed locally, and expected version is not set or installation matches the expected version
+if ((Get-Command "dotnet" -ErrorAction SilentlyContinue) -ne $null -and `
+     (!(Test-Path variable:DotNetVersion) -or $(& dotnet --version) -eq $DotNetVersion)) {
+    $env:DOTNET_EXE = (Get-Command "dotnet").Path
+}
+else {
+    $DotNetDirectory = "$TempDirectory\dotnet-win"
+    $env:DOTNET_EXE = "$DotNetDirectory\dotnet.exe"
+
+    # Download install script
+    $DotNetInstallFile = "$TempDirectory\dotnet-install.ps1"
+    md -force $TempDirectory > $null
+    (New-Object System.Net.WebClient).DownloadFile($DotNetInstallUrl, $DotNetInstallFile)
+
+    # Install by channel or version
+    if (!(Test-Path variable:DotNetVersion)) {
+        ExecSafe { & $DotNetInstallFile -InstallDir $DotNetDirectory -Channel $DotNetChannel -NoPath }
+    } else {
+        ExecSafe { & $DotNetInstallFile -InstallDir $DotNetDirectory -Version $DotNetVersion -NoPath }
+    }
+}
+
+Write-Output "Microsoft (R) .NET Core SDK version $(& $env:DOTNET_EXE --version)"
+
+ExecSafe { & $env:DOTNET_EXE run --project $BuildProjectFile -- $BuildArguments }
