@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
-using System.Xml.Linq;
+using System.Xml;
 using ReactiveUI;
 
 namespace PackageReferenceEditor
@@ -8,12 +8,12 @@ namespace PackageReferenceEditor
     [DataContract]
     public class UpdaterResult : ReactiveObject
     {
-        private IList<XDocument> _documents;
+        private IList<XmlDocument> _documents;
         private IList<PackageReference> _references;
         private Dictionary<string, IList<PackageReference>> _groupedReferences;
 
         [DataMember]
-        public IList<XDocument> Documents
+        public IList<XmlDocument> Documents
         {
             get => _documents;
             set => this.RaiseAndSetIfChanged(ref _documents, value);
