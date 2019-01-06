@@ -37,33 +37,56 @@ namespace PackageReferenceEditor
             document.Load(fileName);
             documents.Add(document);
 
-            var root = document.DocumentElement;
-            var nodes = root.SelectNodes("descendant::PackageReference");
+            XmlNodeList packageReferences = default;
 
-            foreach (XmlNode node in nodes)
+            if (document.DocumentElement.Attributes["xmlns"] != null)
             {
-                var name = node.Attributes["Include"];
-                var versionAttribute = node.Attributes["Version"];
+                string xmlns = document.DocumentElement.Attributes["xmlns"].Value;
+                XmlNamespaceManager namespaceManager = new XmlNamespaceManager(document.NameTable);
+                namespaceManager.AddNamespace("msbuild", xmlns);
+                packageReferences = document.SelectNodes("//msbuild:Project//msbuild:ItemGroup//msbuild:PackageReference", namespaceManager);
+            }
+            else
+            {
+                packageReferences = document.SelectNodes("//Project//ItemGroup//PackageReference");
+            }
+
+            foreach (XmlNode packageReference in packageReferences)
+            {
+                var name = default(string);
                 var version = default(string);
+
+                var includeAttribute = packageReference.Attributes["Include"];
+                if (includeAttribute != null)
+                {
+                    name = includeAttribute.Value;
+                }
+                else
+                {
+                    continue;
+                }
+
+                var versionAttribute = packageReference.Attributes["Version"];
                 if (versionAttribute != null)
                 {
                     version = versionAttribute.Value;
                 }
                 else
                 {
-                    var versions = node.SelectNodes("descendant::Version");
+                    var versions = packageReference.SelectNodes("descendant::Version");
                     if (versions.Count > 0)
                     {
-                        version = versions[0].Value;
+                        version = versions[0].InnerText;
                     }
                 }
+
                 var pr = new PackageReference()
                 {
-                    Name = name.Value,
+                    Name = name,
                     Version = version,
                     FileName = fileName,
                     Document = document,
-                    Reference = node,
+                    Reference = packageReference,
                     VersionAttribute = versionAttribute
                 };
                 references.Add(pr);
@@ -145,10 +168,10 @@ namespace PackageReferenceEditor
                     if (versions.Count > 0)
                     {
                         var versionElement = versions[0];
-                        if (version != versionElement.Value)
+                        if (version != versionElement.InnerText)
                         {
-                            Logger.Log($"Name: {name}, old: {versionElement.Value}, new: {version}, file: {v.FileName}");
-                            versionElement.Value = version;
+                            Logger.Log($"Name: {name}, old: {versionElement.InnerText}, new: {version}, file: {v.FileName}");
+                            versionElement.InnerText = version;
                             Save(v);
                         }
                     }
@@ -176,10 +199,10 @@ namespace PackageReferenceEditor
                     if (versions.Count > 0)
                     {
                         var versionElement = versions[0];
-                        if (v.Version != versionElement.Value || alwaysUpdate == true)
+                        if (v.Version != versionElement.InnerText || alwaysUpdate == true)
                         {
-                            Logger.Log($"Name: {package.Key}, old: {versionElement.Value}, new: {v.Version}, file: {v.FileName}");
-                            versionElement.Value = v.Version;
+                            Logger.Log($"Name: {package.Key}, old: {versionElement.InnerText}, new: {v.Version}, file: {v.FileName}");
+                            versionElement.InnerText = v.Version;
                             Save(v);
                         }
                     }
