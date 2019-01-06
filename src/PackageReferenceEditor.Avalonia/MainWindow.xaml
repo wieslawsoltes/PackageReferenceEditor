@@ -2,6 +2,6 @@
         xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:views="clr-namespace:PackageReferenceEditor.Avalonia.Views;assembly=PackageReferenceEditor.Avalonia"
-        Title="PackageReferenceEditor" Height="700" Width="800">
+        Title="PackageReferenceEditor" Height="680" Width="800">
     <views:MainView/>
 </Window>
