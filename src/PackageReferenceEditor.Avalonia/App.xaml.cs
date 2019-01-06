@@ -2,7 +2,7 @@
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Xml.Linq;
+using System.Xml;
 using Avalonia;
 using Avalonia.Logging.Serilog;
 using Avalonia.Markup.Xaml;
@@ -14,13 +14,21 @@ namespace PackageReferenceEditor.Avalonia
     {
         static void Main(string[] args)
         {
-            ReferenceEditor vm = null;
+            var jsonSettings = new JsonSerializerSettings()
+            {
+                PreserveReferencesHandling = PreserveReferencesHandling.Objects
+            };
+            string settingPath = "settings.json";
+            ReferenceEditor editor = default;
 
             try
             {
-                vm = JsonConvert.DeserializeObject<ReferenceEditor>(
-                    File.ReadAllText("settings.json"),
-                    new JsonSerializerSettings() { PreserveReferencesHandling = PreserveReferencesHandling.Objects });
+                if (File.Exists(settingPath))
+                {
+                    string json = File.ReadAllText(settingPath);
+                    editor = JsonConvert.DeserializeObject<ReferenceEditor>(json, jsonSettings);
+                }
+
             }
             catch (Exception ex)
             {
@@ -28,7 +36,7 @@ namespace PackageReferenceEditor.Avalonia
                 Logger.Log(ex.StackTrace);
             }
 
-            if (vm == null)
+            if (editor == null)
             {
                 var feeds = new ObservableCollection<Feed>
                 {
@@ -47,7 +55,7 @@ namespace PackageReferenceEditor.Avalonia
                     "*.csproj"
                 };
 
-                vm = new ReferenceEditor()
+                editor = new ReferenceEditor()
                 {
                     Feeds = feeds,
                     CurrentFeed = feeds.FirstOrDefault(),
@@ -58,21 +66,18 @@ namespace PackageReferenceEditor.Avalonia
                 };
             }
 
-            vm.Result = new UpdaterResult()
+            editor.Result = new UpdaterResult()
             {
-                Documents = new ObservableCollection<XDocument>(),
+                Documents = new ObservableCollection<XmlDocument>(),
                 References = new ObservableCollection<PackageReference>()
             };
 
-            BuildAvaloniaApp().Start<MainWindow>(() => vm);
+            BuildAvaloniaApp().Start<MainWindow>(() => editor);
 
             try
             {
-                var settings = JsonConvert.SerializeObject(
-                    vm, 
-                    Formatting.Indented, 
-                    new JsonSerializerSettings() { PreserveReferencesHandling = PreserveReferencesHandling.Objects });
-                File.WriteAllText("settings.json", settings);
+                var json = JsonConvert.SerializeObject(editor, Newtonsoft.Json.Formatting.Indented, jsonSettings);
+                File.WriteAllText(settingPath, json);
             }
             catch (Exception ex)
             {
