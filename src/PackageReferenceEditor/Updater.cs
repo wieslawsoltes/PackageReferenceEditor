@@ -3,18 +3,23 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Xml.Linq;
+using System.Xml;
 
 namespace PackageReferenceEditor
 {
     public static class Updater
     {
+        private static void Save(PackageReference v)
+        {
+            v.Document.Save(v.FileName);
+        }
+
         public static string NormalizePath(string path)
         {
             return path.Replace(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar).ToUpperInvariant();
         }
 
-        public static void FindReferences(string searchPath, string searchPattern, IEnumerable<string> ignoredPaths, IList<PackageReference> references, IList<XDocument> documents)
+        public static void FindReferences(string searchPath, string searchPattern, IEnumerable<string> ignoredPaths, IList<PackageReference> references, IList<XmlDocument> documents)
         {
             Directory.EnumerateFiles(searchPath, searchPattern, SearchOption.AllDirectories).ToList().ForEach(
                 fileName =>
@@ -26,22 +31,39 @@ namespace PackageReferenceEditor
                 });
         }
 
-        public static void FindReferences(string fileName, IList<PackageReference> references, IList<XDocument> documents)
+        public static void FindReferences(string fileName, IList<PackageReference> references, IList<XmlDocument> documents)
         {
-            var document = XDocument.Load(fileName);
+            var document = new XmlDocument() { PreserveWhitespace = true };
+            document.Load(fileName);
             documents.Add(document);
-            foreach (var reference in document.Descendants().Where(x => x.Name.LocalName == "PackageReference"))
+
+            var root = document.DocumentElement;
+            var nodes = root.SelectNodes("descendant::PackageReference");
+
+            foreach (XmlNode node in nodes)
             {
-                var name = reference.Attribute("Include").Value;
-                var versionAttribute = reference.Attribute("Version");
-                var version = versionAttribute != null ? versionAttribute.Value : reference.Elements().First(x => x.Name.LocalName == "Version").Value;
+                var name = node.Attributes["Include"];
+                var versionAttribute = node.Attributes["Version"];
+                var version = default(string);
+                if (versionAttribute != null)
+                {
+                    version = versionAttribute.Value;
+                }
+                else
+                {
+                    var versions = node.SelectNodes("descendant::Version");
+                    if (versions.Count > 0)
+                    {
+                        version = versions[0].Value;
+                    }
+                }
                 var pr = new PackageReference()
                 {
-                    Name = name,
+                    Name = name.Value,
                     Version = version,
                     FileName = fileName,
                     Document = document,
-                    Reference = reference,
+                    Reference = node,
                     VersionAttribute = versionAttribute
                 };
                 references.Add(pr);
@@ -64,7 +86,7 @@ namespace PackageReferenceEditor
         {
             return new UpdaterResult()
             {
-                Documents = new ObservableCollection<XDocument>(),
+                Documents = new ObservableCollection<XmlDocument>(),
                 References = new ObservableCollection<PackageReference>()
             }
             .FindReferences(searchPath, searchPattern, ignoredPaths);
@@ -114,19 +136,20 @@ namespace PackageReferenceEditor
                     {
                         Logger.Log($"Name: {name}, old: {v.VersionAttribute.Value}, new: {version}, file: {v.FileName}");
                         v.VersionAttribute.Value = version;
-                        v.Document.Save(v.FileName);
+                        Save(v);
                     }
                 }
                 else
                 {
-                    var versionElement = v.Reference.Elements().First(x => x.Name.LocalName == "Version");
-                    if (versionElement != null)
+                    var versions = v.Reference.SelectNodes("descendant::Version");
+                    if (versions.Count > 0)
                     {
+                        var versionElement = versions[0];
                         if (version != versionElement.Value)
                         {
                             Logger.Log($"Name: {name}, old: {versionElement.Value}, new: {version}, file: {v.FileName}");
                             versionElement.Value = version;
-                            v.Document.Save(v.FileName);
+                            Save(v);
                         }
                     }
                 }
@@ -144,19 +167,20 @@ namespace PackageReferenceEditor
                     {
                         Logger.Log($"Name: {package.Key}, old: {v.VersionAttribute.Value}, new: {v.Version}, file: {v.FileName}");
                         v.VersionAttribute.Value = v.Version;
-                        v.Document.Save(v.FileName);
+                        Save(v);
                     }
                 }
                 else
                 {
-                    var versionElement = v.Reference.Elements().First(x => x.Name.LocalName == "Version");
-                    if (versionElement != null)
+                    var versions = v.Reference.SelectNodes("descendant::Version");
+                    if (versions.Count > 0)
                     {
+                        var versionElement = versions[0];
                         if (v.Version != versionElement.Value || alwaysUpdate == true)
                         {
                             Logger.Log($"Name: {package.Key}, old: {versionElement.Value}, new: {v.Version}, file: {v.FileName}");
                             versionElement.Value = v.Version;
-                            v.Document.Save(v.FileName);
+                            Save(v);
                         }
                     }
                 }

@@ -1,5 +1,5 @@
 ﻿using System.Runtime.Serialization;
-using System.Xml.Linq;
+using System.Xml;
 using ReactiveUI;
 
 namespace PackageReferenceEditor
@@ -10,9 +10,9 @@ namespace PackageReferenceEditor
         private string _name;
         private string _version;
         private string _fileName;
-        private XDocument _document;
-        private XElement _reference;
-        private XAttribute _versionAttribute;
+        private XmlDocument _document;
+        private XmlNode _reference;
+        private XmlAttribute _versionAttribute;
 
         [DataMember]
         public string Name
@@ -36,21 +36,21 @@ namespace PackageReferenceEditor
         }
 
         [DataMember]
-        public XDocument Document
+        public XmlDocument Document
         {
             get => _document;
             set => this.RaiseAndSetIfChanged(ref _document, value);
         }
 
         [DataMember]
-        public XElement Reference
+        public XmlNode Reference
         {
             get => _reference;
             set => this.RaiseAndSetIfChanged(ref _reference, value);
         }
 
         [DataMember]
-        public XAttribute VersionAttribute
+        public XmlAttribute VersionAttribute
         {
             get => _versionAttribute;
             set => this.RaiseAndSetIfChanged(ref _versionAttribute, value);
