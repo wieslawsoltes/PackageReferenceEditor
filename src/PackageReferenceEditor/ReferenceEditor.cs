@@ -110,7 +110,7 @@ namespace PackageReferenceEditor
                 CurrentVersion = null;
                 Result.FindReferences(SearchPath, SearchPattern, new string[] { });
                 CurrentReferences = Result.GroupedReferences.FirstOrDefault();
-                CurrentReference = CurrentReferences.Value.FirstOrDefault();
+                CurrentReference = CurrentReferences.Value?.FirstOrDefault();
             }
             catch (Exception ex)
             {
