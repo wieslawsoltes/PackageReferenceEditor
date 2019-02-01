@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.Threading.Tasks;
 using ReactiveUI;
 
 namespace PackageReferenceEditor
@@ -21,6 +22,7 @@ namespace PackageReferenceEditor
         private KeyValuePair<string, IList<PackageReference>> _currentReferences;
         private PackageReference _currentReference;
         private bool _alwaysUpdate;
+        private bool _isWorking;
 
         [DataMember]
         public IList<Feed> Feeds
@@ -99,103 +101,146 @@ namespace PackageReferenceEditor
             set => this.RaiseAndSetIfChanged(ref _alwaysUpdate, value);
         }
 
-        public void Search()
+        [IgnoreDataMember]
+        public bool IsWorking
+        {
+            get => _isWorking;
+            set => this.RaiseAndSetIfChanged(ref _isWorking, value);
+        }
+
+        public async Task Search()
         {
             try
             {
-                Result.Reset();
-                CurrentReferences = default;
-                CurrentReference = default;
-                Versions = null;
-                CurrentVersion = null;
-                Result.FindReferences(SearchPath, SearchPattern, new string[] { });
-                CurrentReferences = Result.GroupedReferences.FirstOrDefault();
-                CurrentReference = CurrentReferences.Value?.FirstOrDefault();
+                IsWorking = true;
+                await Task.Run(() =>
+                {
+                    Result.Reset();
+                    CurrentReferences = default;
+                    CurrentReference = default;
+                    Versions = null;
+                    CurrentVersion = null;
+                    Result.FindReferences(SearchPath, SearchPattern, new string[] { });
+                    CurrentReferences = Result.GroupedReferences.FirstOrDefault();
+                    CurrentReference = CurrentReferences.Value?.FirstOrDefault();
+                });
+                IsWorking = false;
             }
             catch (Exception ex)
             {
+                IsWorking = false;
                 Logger.Log(ex.Message);
                 Logger.Log(ex.StackTrace);
             }
         }
 
-        public void ConsolidateVersions()
+        public async Task ConsolidateVersions()
         {
             try
             {
-                foreach (var reference in CurrentReferences.Value)
+                IsWorking = true;
+                await Task.Run(() =>
                 {
-                    if (reference != CurrentReference)
+                    foreach (var reference in CurrentReferences.Value)
                     {
-                        reference.Version = CurrentReference.Version;
+                        if (reference != CurrentReference)
+                        {
+                            reference.Version = CurrentReference.Version;
+                        }
                     }
-                }
+                });
+                IsWorking = false;
             }
             catch (Exception ex)
             {
+                IsWorking = false;
                 Logger.Log(ex.Message);
                 Logger.Log(ex.StackTrace);
             }
         }
 
-        public void UseVersion()
+        public async Task UseVersion()
         {
             try
             {
-                if (CurrentReference != null)
+                IsWorking = true;
+                await Task.Run(() =>
                 {
-                    CurrentReference.Version = CurrentVersion;
-                }
+                    if (CurrentReference != null)
+                    {
+                        CurrentReference.Version = CurrentVersion;
+                    }
+                });
+                IsWorking = false;
             }
             catch (Exception ex)
             {
+                IsWorking = false;
                 Logger.Log(ex.Message);
                 Logger.Log(ex.StackTrace);
             }
         }
 
-        public async void GetVersions()
+        public async Task GetVersions()
         {
             try
             {
+                IsWorking = true;
                 var versions = await NuGetApi.GetPackageVersions(CurrentFeed.Uri, CurrentReferences.Key);
-                if (versions != null)
+                await Task.Run(() =>
                 {
-                    Versions = new ObservableCollection<string>(versions.Reverse());
-                    CurrentVersion = Versions.FirstOrDefault();
-                }
+                    if (versions != null)
+                    {
+                        Versions = new ObservableCollection<string>(versions.Reverse());
+                        CurrentVersion = Versions.FirstOrDefault();
+                    }
+                });
+                IsWorking = false;
             }
             catch (Exception ex)
             {
+                IsWorking = false;
                 Logger.Log(ex.Message);
                 Logger.Log(ex.StackTrace);
             }
         }
 
-        public void UpdateCurrent()
+        public async Task UpdateCurrent()
         {
             try
             {
-                Updater.UpdateVersions(CurrentReferences, AlwaysUpdate);
+                IsWorking = true;
+                await Task.Run(() =>
+                {
+                    Updater.UpdateVersions(CurrentReferences, AlwaysUpdate);
+                });
+                IsWorking = false;
             }
             catch (Exception ex)
             {
+                IsWorking = false;
                 Logger.Log(ex.Message);
                 Logger.Log(ex.StackTrace);
             }
         }
 
-        public void UpdateAll()
+        public async Task UpdateAll()
         {
             try
             {
-                foreach (var references in Result.GroupedReferences)
+                IsWorking = true;
+                await Task.Run(() =>
                 {
-                    Updater.UpdateVersions(references, AlwaysUpdate);
-                }
+                    foreach (var references in Result.GroupedReferences)
+                    {
+                        Updater.UpdateVersions(references, AlwaysUpdate);
+                    }
+                });
+                IsWorking = false;
             }
             catch (Exception ex)
             {
+                IsWorking = false;
                 Logger.Log(ex.Message);
                 Logger.Log(ex.StackTrace);
             }
