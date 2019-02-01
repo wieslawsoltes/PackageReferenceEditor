@@ -4,25 +4,25 @@
              UseLayoutRounding="True" Focusable="True">
     <Grid ColumnDefinitions="250,8,*" RowDefinitions="Auto,*">
         <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*,100,100" Margin="2" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
-            <TextBox x:Name="textBoxSearchPath" Text="{Binding SearchPath}" Margin="2" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
-            <Button x:Name="buttonBrowse" Content="..." Margin="2" Grid.Row="0" Grid.Column="2"/>
-            <TextBox x:Name="textBoxSearchPattern" Text="{Binding SearchPattern}" Margin="2" Grid.Row="1" Grid.Column="0"/>
-            <DropDown x:Name="dropDownPatterns" Items="{Binding SearchPatterns}" SelectedItem="{Binding SearchPattern, Mode=OneWay}" Margin="2" Grid.Row="1" Grid.Column="1"/>
-            <Button x:Name="buttonSearch" Content="Search" Command="{Binding Search}" Margin="2" Grid.Row="1" Grid.Column="2"/>
+            <TextBox x:Name="textBoxSearchPath" Text="{Binding SearchPath}" IsEnabled="{Binding !IsWorking}" Margin="2" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
+            <Button x:Name="buttonBrowse" Content="..." Margin="2" IsEnabled="{Binding !IsWorking}" Grid.Row="0" Grid.Column="2"/>
+            <TextBox x:Name="textBoxSearchPattern" Text="{Binding SearchPattern}" IsEnabled="{Binding !IsWorking}" Margin="2" Grid.Row="1" Grid.Column="0"/>
+            <DropDown x:Name="dropDownPatterns" Items="{Binding SearchPatterns}" SelectedItem="{Binding SearchPattern, Mode=OneWay}" IsEnabled="{Binding !IsWorking}" Margin="2" Grid.Row="1" Grid.Column="1"/>
+            <Button x:Name="buttonSearch" Content="Search" Command="{Binding Search}" IsEnabled="{Binding !IsWorking}" Margin="2" Grid.Row="1" Grid.Column="2"/>
         </Grid>
         <Grid RowDefinitions="*,Auto" Margin="2" Grid.Row="1" Grid.Column="0">
-            <ListBox x:Name="listBoxGroups" Items="{Binding Result.GroupedReferences}" SelectedItem="{Binding CurrentReferences}" Margin="2" Grid.Row="0">
+            <ListBox x:Name="listBoxGroups" Items="{Binding Result.GroupedReferences}" SelectedItem="{Binding CurrentReferences}" IsEnabled="{Binding !IsWorking}" Margin="2" Grid.Row="0">
                 <ListBox.DataTemplates>
                     <DataTemplate>
                         <TextBlock Text="{Binding Key}" Margin="1"/>
                     </DataTemplate>
                 </ListBox.DataTemplates>
             </ListBox>
-            <Button x:Name="buttonUpdateAll" Content="Update Files" Command="{Binding UpdateAll}" Margin="2" Grid.Row="1"/>
+            <Button x:Name="buttonUpdateAll" Content="Update Files" Command="{Binding UpdateAll}" IsEnabled="{Binding !IsWorking}" Margin="2" Grid.Row="1"/>
         </Grid>
         <GridSplitter Width="8" Grid.Row="1" Grid.Column="1"/>
         <Grid RowDefinitions="*,Auto,Auto,Auto,Auto" Margin="2" Grid.Row="1" Grid.Column="2">
-            <ListBox x:Name="listBoxReferences" Items="{Binding CurrentReferences.Value}" SelectedItem="{Binding CurrentReference}" Margin="2" Grid.Row="0">
+            <ListBox x:Name="listBoxReferences" Items="{Binding CurrentReferences.Value}" SelectedItem="{Binding CurrentReference}" IsEnabled="{Binding !IsWorking}" Margin="2" Grid.Row="0">
                 <ListBox.DataTemplates>
                     <DataTemplate>
                         <StackPanel Margin="2">
@@ -33,23 +33,23 @@
                 </ListBox.DataTemplates>
             </ListBox>
             <Grid RowDefinitions="Auto" ColumnDefinitions="*,100" Grid.Row="1">
-                <TextBox Text="{Binding CurrentReference.Version}" Margin="2" Grid.Row="0" Grid.Column="0"/>
-                <Button x:Name="buttonConsolidate" Content="Consolidate" Command="{Binding ConsolidateVersions}" Margin="2" Grid.Row="0" Grid.Column="1"/>
+                <TextBox Text="{Binding CurrentReference.Version}" IsEnabled="{Binding !IsWorking}" Margin="2" Grid.Row="0" Grid.Column="0"/>
+                <Button x:Name="buttonConsolidate" Content="Consolidate" Command="{Binding ConsolidateVersions}" IsEnabled="{Binding !IsWorking}" Margin="2" Grid.Row="0" Grid.Column="1"/>
             </Grid>
             <Grid RowDefinitions="Auto" ColumnDefinitions="50*,100,50*,100" Grid.Row="2">
-                <DropDown x:Name="dropDownVersions" Items="{Binding Versions}" SelectedItem="{Binding CurrentVersion}" Margin="2" Grid.Row="1" Grid.Column="0"/>
-                <Button x:Name="buttonUseVersion" Content="Use Version" Command="{Binding UseVersion}" Margin="2" Grid.Row="0" Grid.Column="1"/>
-                <DropDown x:Name="dropDownFeeds" Items="{Binding Feeds}" SelectedItem="{Binding CurrentFeed}" Margin="2" Grid.Row="1" Grid.Column="2">
+                <DropDown x:Name="dropDownVersions" Items="{Binding Versions}" SelectedItem="{Binding CurrentVersion}" IsEnabled="{Binding !IsWorking}" Margin="2" Grid.Row="1" Grid.Column="0"/>
+                <Button x:Name="buttonUseVersion" Content="Use Version" Command="{Binding UseVersion}" IsEnabled="{Binding !IsWorking}" Margin="2" Grid.Row="0" Grid.Column="1"/>
+                <DropDown x:Name="dropDownFeeds" Items="{Binding Feeds}" SelectedItem="{Binding CurrentFeed}" IsEnabled="{Binding !IsWorking}" Margin="2" Grid.Row="1" Grid.Column="2">
                     <DropDown.DataTemplates>
                         <DataTemplate>
                             <TextBlock Text="{Binding Name}" Margin="1"/>
                         </DataTemplate>
                     </DropDown.DataTemplates>
                 </DropDown>
-                <Button x:Name="buttonVersions" Content="Get Versions" Command="{Binding GetVersions}" Margin="2" Grid.Row="0" Grid.Column="3"/>
+                <Button x:Name="buttonVersions" Content="Get Versions" Command="{Binding GetVersions}" IsEnabled="{Binding !IsWorking}" Margin="2" Grid.Row="0" Grid.Column="3"/>
             </Grid>
-            <CheckBox x:Name="checkBoxAlwaysUpdate" IsChecked="{Binding AlwaysUpdate}" Content="Always Update" Margin="2" Grid.Row="3"/>
-            <Button x:Name="buttonUpdateCurrent" Content="Update Files" Command="{Binding UpdateCurrent}" Margin="2" Grid.Row="4"/>
+            <CheckBox x:Name="checkBoxAlwaysUpdate" IsChecked="{Binding AlwaysUpdate}" Content="Always Update" IsEnabled="{Binding !IsWorking}" Margin="2" Grid.Row="3"/>
+            <Button x:Name="buttonUpdateCurrent" Content="Update Files" Command="{Binding UpdateCurrent}" IsEnabled="{Binding !IsWorking}" Margin="2" Grid.Row="4"/>
         </Grid>
     </Grid>
 </UserControl>
