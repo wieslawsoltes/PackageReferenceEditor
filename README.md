@@ -15,10 +15,10 @@ MSBuild, csproj and props package reference editor.
 
 | Platform              | Type        | Version       | Download                                                                                                                                                                                        |
 |-----------------------|-------------|---------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| All                   | NuGet       | 0.0.6         | [PackageReferenceEditor.0.0.6.nupkg](https://github.com/wieslawsoltes/packagereferenceeditor/releases/download/0.0.6/PackageReferenceEditor.0.0.6.nupkg)                                        |
-| osx.10.12-x64         | Portable    | 0.0.6         | [PackageReferenceEditor.Avalonia-osx.10.12-x64.zip](https://github.com/wieslawsoltes/packagereferenceeditor/releases/download/0.0.6/PackageReferenceEditor.Avalonia-osx.10.12-x64.zip)          |
-| ubuntu.14.04-x64      | Portable    | 0.0.6         | [PackageReferenceEditor.Avalonia-ubuntu.14.04-x64.zip](https://github.com/wieslawsoltes/packagereferenceeditor/releases/download/0.0.6/PackageReferenceEditor.Avalonia-ubuntu.14.04-x64.zip)    |
-| win7-x64              | Portable    | 0.0.6         | [PackageReferenceEditor.Avalonia-win7-x64.zip](https://github.com/wieslawsoltes/packagereferenceeditor/releases/download/0.0.6/PackageReferenceEditor.Avalonia-win7-x64.zip)                    |
+| All                   | NuGet       | 0.8.0         | [PackageReferenceEditor.0.8.0.nupkg](https://github.com/wieslawsoltes/packagereferenceeditor/releases/download/0.8.0/PackageReferenceEditor.0.8.0.nupkg)                                        |
+| osx.10.12-x64         | Portable    | 0.8.0         | [PackageReferenceEditor.Avalonia-osx.10.12-x64.zip](https://github.com/wieslawsoltes/packagereferenceeditor/releases/download/0.8.0/PackageReferenceEditor.Avalonia-osx.10.12-x64.zip)          |
+| ubuntu.14.04-x64      | Portable    | 0.8.0         | [PackageReferenceEditor.Avalonia-ubuntu.14.04-x64.zip](https://github.com/wieslawsoltes/packagereferenceeditor/releases/download/0.8.0/PackageReferenceEditor.Avalonia-ubuntu.14.04-x64.zip)    |
+| win7-x64              | Portable    | 0.8.0         | [PackageReferenceEditor.Avalonia-win7-x64.zip](https://github.com/wieslawsoltes/packagereferenceeditor/releases/download/0.8.0/PackageReferenceEditor.Avalonia-win7-x64.zip)                    |
 
 ## Screenshots
 
