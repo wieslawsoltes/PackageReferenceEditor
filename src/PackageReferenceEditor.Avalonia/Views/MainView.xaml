@@ -7,7 +7,7 @@
             <TextBox x:Name="textBoxSearchPath" Text="{Binding SearchPath}" IsEnabled="{Binding !IsWorking}" Margin="2" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
             <Button x:Name="buttonBrowse" Content="..." Margin="2" IsEnabled="{Binding !IsWorking}" Grid.Row="0" Grid.Column="2"/>
             <TextBox x:Name="textBoxSearchPattern" Text="{Binding SearchPattern}" IsEnabled="{Binding !IsWorking}" Margin="2" Grid.Row="1" Grid.Column="0"/>
-            <DropDown x:Name="dropDownPatterns" Items="{Binding SearchPatterns}" SelectedItem="{Binding SearchPattern, Mode=OneWay}" IsEnabled="{Binding !IsWorking}" Margin="2" Grid.Row="1" Grid.Column="1"/>
+            <ComboBox x:Name="comboBoxPatterns" Items="{Binding SearchPatterns}" SelectedItem="{Binding SearchPattern, Mode=OneWay}" IsEnabled="{Binding !IsWorking}" Margin="2" Grid.Row="1" Grid.Column="1"/>
             <Button x:Name="buttonSearch" Content="Search" Command="{Binding Search}" IsEnabled="{Binding !IsWorking}" Margin="2" Grid.Row="1" Grid.Column="2"/>
         </Grid>
         <Grid RowDefinitions="*,Auto" Margin="2" Grid.Row="1" Grid.Column="0">
@@ -37,15 +37,15 @@
                 <Button x:Name="buttonConsolidate" Content="Consolidate" Command="{Binding ConsolidateVersions}" IsEnabled="{Binding !IsWorking}" Margin="2" Grid.Row="0" Grid.Column="1"/>
             </Grid>
             <Grid RowDefinitions="Auto" ColumnDefinitions="50*,100,50*,100" Grid.Row="2">
-                <DropDown x:Name="dropDownVersions" Items="{Binding Versions}" SelectedItem="{Binding CurrentVersion}" IsEnabled="{Binding !IsWorking}" Margin="2" Grid.Row="1" Grid.Column="0"/>
+                <ComboBox x:Name="comboBoxPVersions" Items="{Binding Versions}" SelectedItem="{Binding CurrentVersion}" IsEnabled="{Binding !IsWorking}" Margin="2" Grid.Row="1" Grid.Column="0"/>
                 <Button x:Name="buttonUseVersion" Content="Use Version" Command="{Binding UseVersion}" IsEnabled="{Binding !IsWorking}" Margin="2" Grid.Row="0" Grid.Column="1"/>
-                <DropDown x:Name="dropDownFeeds" Items="{Binding Feeds}" SelectedItem="{Binding CurrentFeed}" IsEnabled="{Binding !IsWorking}" Margin="2" Grid.Row="1" Grid.Column="2">
-                    <DropDown.DataTemplates>
+                <ComboBox x:Name="comboBoxPFeeds" Items="{Binding Feeds}" SelectedItem="{Binding CurrentFeed}" IsEnabled="{Binding !IsWorking}" Margin="2" Grid.Row="1" Grid.Column="2">
+                    <ComboBox.DataTemplates>
                         <DataTemplate>
                             <TextBlock Text="{Binding Name}" Margin="1"/>
                         </DataTemplate>
-                    </DropDown.DataTemplates>
-                </DropDown>
+                    </ComboBox.DataTemplates>
+                </ComboBox>
                 <Button x:Name="buttonVersions" Content="Get Versions" Command="{Binding GetVersions}" IsEnabled="{Binding !IsWorking}" Margin="2" Grid.Row="0" Grid.Column="3"/>
             </Grid>
             <CheckBox x:Name="checkBoxAlwaysUpdate" IsChecked="{Binding AlwaysUpdate}" Content="Always Update" IsEnabled="{Binding !IsWorking}" Margin="2" Grid.Row="3"/>

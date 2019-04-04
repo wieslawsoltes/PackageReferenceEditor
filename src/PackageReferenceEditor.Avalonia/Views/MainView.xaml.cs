@@ -7,14 +7,14 @@ namespace PackageReferenceEditor.Avalonia.Views
 {
     public class MainView : UserControl
     {
-        private readonly DropDown _dropDownPatterns;
+        private readonly ComboBox _comboBoxPatterns;
         private readonly Button _buttonBrowse;
 
         public MainView()
         {
             InitializeComponent();
-            _dropDownPatterns = this.FindControl<DropDown>("dropDownPatterns");
-            _dropDownPatterns.SelectionChanged += patterns_SelectionChanged;
+            _comboBoxPatterns = this.FindControl<ComboBox>("comboBoxPatterns");
+            _comboBoxPatterns.SelectionChanged += patterns_SelectionChanged;
             _buttonBrowse = this.FindControl<Button>("buttonBrowse");
             _buttonBrowse.Click += buttonBrowse_Click;
         }
@@ -30,7 +30,7 @@ namespace PackageReferenceEditor.Avalonia.Views
             {
                 if (DataContext is ReferenceEditor vm)
                 {
-                    vm.SearchPattern = _dropDownPatterns.SelectedItem as string;
+                    vm.SearchPattern = _comboBoxPatterns.SelectedItem as string;
                 }
             }
             catch (Exception ex)
