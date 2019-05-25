@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
+    <PackageId>PackageReferenceEditor</PackageId>
     <Description>MSBuild, csproj and props package reference editor.</Description>
     <PackageTags>msbuild;props;csproj;packagereference;nuget;editor</PackageTags>
   </PropertyGroup>
