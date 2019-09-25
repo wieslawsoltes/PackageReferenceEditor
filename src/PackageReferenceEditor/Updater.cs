@@ -11,7 +11,7 @@ namespace PackageReferenceEditor
     {
         public static void FindReferences(string fileName, IList<PackageReference> references, XmlDocument document)
         {
-            XmlNodeList packageReferences = default;
+            XmlNodeList? packageReferences = default;
 
             if (document.DocumentElement.Attributes["xmlns"] != null)
             {
@@ -114,12 +114,22 @@ namespace PackageReferenceEditor
 
         public static UpdaterResult FindReferences(this UpdaterResult updater, string searchPath, string searchPattern, IEnumerable<string> ignoredPaths)
         {
-            FindReferences(searchPath, searchPattern, ignoredPaths, updater.References, updater.Documents);
+            if (updater.References != null && updater.Documents != null)
+            {
+                FindReferences(searchPath, searchPattern, ignoredPaths, updater.References, updater.Documents);
 
-            updater.GroupedReferences = updater.References
-                .GroupBy(x => x.Name)
-                .OrderBy(x => x.Key)
-                .ToDictionary(x => x.Key, x => (IList<PackageReference>)new ObservableCollection<PackageReference>(x));
+                if (updater.References != null)
+                {
+                    var groupedReferences = updater.References
+                                                   .GroupBy(x => x.Name)
+                                                   .OrderBy(x => x.Key)
+                                                   .ToDictionary(x => x.Key, x => (IList<PackageReference>)new ObservableCollection<PackageReference>(x));
+                    if (groupedReferences != null)
+                    {
+                        updater.GroupedReferences = groupedReferences;
+                    }
+                } 
+            }
 
             return updater;
         }
@@ -137,64 +147,76 @@ namespace PackageReferenceEditor
         public static void PrintVersions(this UpdaterResult result)
         {
             Logger.Log("NuGet package dependencies versions:");
-            foreach (var package in result.GroupedReferences)
+            if (result.GroupedReferences != null)
             {
-                Logger.Log($"Package {package.Key} is installed:");
-                foreach (var v in package.Value)
+                foreach (var package in result.GroupedReferences)
                 {
-                    Logger.Log($"{v.Version}, {v.FileName}");
-                }
+                    Logger.Log($"Package {package.Key} is installed:");
+                    foreach (var v in package.Value)
+                    {
+                        Logger.Log($"{v.Version}, {v.FileName}");
+                    }
+                } 
             }
         }
 
         public static void ValidateVersions(this UpdaterResult result)
         {
             Logger.Log("Checking installed NuGet package dependencies versions:");
-            foreach (var package in result.GroupedReferences)
+            if (result.GroupedReferences != null)
             {
-                var packageVersion = package.Value.First().Version;
-                bool isValidVersion = package.Value.All(x => x.Version == packageVersion);
-                if (!isValidVersion)
+                foreach (var package in result.GroupedReferences)
                 {
-                    Logger.Log($"Error: package {package.Key} has multiple versions installed:");
-                    foreach (var v in package.Value)
+                    var packageVersion = package.Value.First().Version;
+                    bool isValidVersion = package.Value.All(x => x.Version == packageVersion);
+                    if (!isValidVersion)
                     {
-                        Logger.Log($"{v.Version}, {v.FileName}");
+                        Logger.Log($"Error: package {package.Key} has multiple versions installed:");
+                        foreach (var v in package.Value)
+                        {
+                            Logger.Log($"{v.Version}, {v.FileName}");
+                        }
+                        throw new Exception("Detected multiple NuGet package version installed for different projects.");
                     }
-                    throw new Exception("Detected multiple NuGet package version installed for different projects.");
-                }
-            };
+                };
+            }
             Logger.Log("All NuGet package dependencies versions are valid.");
         }
 
         public static void UpdateVersions(this UpdaterResult result, string name, string version)
         {
             Logger.Log("Updating NuGet package dependencies versions:");
-            foreach (var pr in result.GroupedReferences[name])
+            if (result.GroupedReferences != null)
             {
-                if (pr.VersionAttribute != null)
+                foreach (var pr in result.GroupedReferences[name])
                 {
-                    if (version != pr.VersionAttribute.Value)
+                    if (pr.VersionAttribute != null)
                     {
-                        Logger.Log($"Name: {name}, old: {pr.VersionAttribute.Value}, new: {version}, file: {pr.FileName}");
-                        pr.VersionAttribute.Value = version;
-                        pr.Document.Save(pr.FileName);
-                    }
-                }
-                else
-                {
-                    var versions = pr.Reference.SelectNodes("descendant::Version");
-                    if (versions.Count > 0)
-                    {
-                        var versionElement = versions[0];
-                        if (version != versionElement.InnerText)
+                        if (version != pr.VersionAttribute.Value && pr.Document != null)
                         {
-                            Logger.Log($"Name: {name}, old: {versionElement.InnerText}, new: {version}, file: {pr.FileName}");
-                            versionElement.InnerText = version;
+                            Logger.Log($"Name: {name}, old: {pr.VersionAttribute.Value}, new: {version}, file: {pr.FileName}");
+                            pr.VersionAttribute.Value = version;
                             pr.Document.Save(pr.FileName);
                         }
                     }
-                }
+                    else
+                    {
+                        if (pr.Reference != null)
+                        {
+                            var versions = pr.Reference.SelectNodes("descendant::Version");
+                            if (versions.Count > 0)
+                            {
+                                var versionElement = versions[0];
+                                if (version != versionElement.InnerText && pr.Document != null)
+                                {
+                                    Logger.Log($"Name: {name}, old: {versionElement.InnerText}, new: {version}, file: {pr.FileName}");
+                                    versionElement.InnerText = version;
+                                    pr.Document.Save(pr.FileName);
+                                }
+                            } 
+                        }
+                    }
+                } 
             }
         }
 
@@ -205,7 +227,7 @@ namespace PackageReferenceEditor
             {
                 if (pr.VersionAttribute != null)
                 {
-                    if (pr.Version != pr.VersionAttribute.Value || alwaysUpdate == true)
+                    if ((pr.Version != pr.VersionAttribute.Value || alwaysUpdate == true) && pr.Document != null)
                     {
                         Logger.Log($"Name: {package.Key}, old: {pr.VersionAttribute.Value}, new: {pr.Version}, file: {pr.FileName}");
                         pr.VersionAttribute.Value = pr.Version;
@@ -214,16 +236,19 @@ namespace PackageReferenceEditor
                 }
                 else
                 {
-                    var versions = pr.Reference.SelectNodes("descendant::Version");
-                    if (versions.Count > 0)
+                    if (pr.Reference != null)
                     {
-                        var versionElement = versions[0];
-                        if (pr.Version != versionElement.InnerText || alwaysUpdate == true)
+                        var versions = pr.Reference.SelectNodes("descendant::Version");
+                        if (versions.Count > 0)
                         {
-                            Logger.Log($"Name: {package.Key}, old: {versionElement.InnerText}, new: {pr.Version}, file: {pr.FileName}");
-                            versionElement.InnerText = pr.Version;
-                            pr.Document.Save(pr.FileName);
-                        }
+                            var versionElement = versions[0];
+                            if ((pr.Version != versionElement.InnerText || alwaysUpdate == true) && pr.Document != null)
+                            {
+                                Logger.Log($"Name: {package.Key}, old: {versionElement.InnerText}, new: {pr.Version}, file: {pr.FileName}");
+                                versionElement.InnerText = pr.Version;
+                                pr.Document.Save(pr.FileName);
+                            }
+                        } 
                     }
                 }
             }

@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Xml;
 using Avalonia;
+using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Logging.Serilog;
 using Avalonia.Markup.Xaml;
 using Newtonsoft.Json;
@@ -14,31 +15,51 @@ namespace PackageReferenceEditor.Avalonia
     {
         static void Main(string[] args)
         {
-            var jsonSettings = new JsonSerializerSettings()
-            {
-                PreserveReferencesHandling = PreserveReferencesHandling.Objects
-            };
-            string settingPath = "settings.json";
-            ReferenceEditor editor = default;
+            BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
+        }
 
-            try
+        public static AppBuilder BuildAvaloniaApp()
+            => AppBuilder.Configure<App>()
+                         .UsePlatformDetect()
+                         .LogToDebug();
+
+        public override void Initialize()
+        {
+            AvaloniaXamlLoader.Load(this);
+        }
+
+        public override void OnFrameworkInitializationCompleted()
+        {
+            if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktopLifetime)
             {
-                if (File.Exists(settingPath))
+                var jsonSettings = new JsonSerializerSettings()
                 {
-                    string json = File.ReadAllText(settingPath);
-                    editor = JsonConvert.DeserializeObject<ReferenceEditor>(json, jsonSettings);
+                    PreserveReferencesHandling = PreserveReferencesHandling.Objects
+                };
+                string settingPath = "settings.json";
+                ReferenceEditor? editor = default;
+
+                try
+                {
+                    if (File.Exists(settingPath))
+                    {
+                        string json = File.ReadAllText(settingPath);
+                        editor = JsonConvert.DeserializeObject<ReferenceEditor>(json, jsonSettings);
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    Logger.Log(ex.Message);
+                    if (ex.StackTrace != null)
+                    {
+                        Logger.Log(ex.StackTrace); 
+                    }
                 }
 
-            }
-            catch (Exception ex)
-            {
-                Logger.Log(ex.Message);
-                Logger.Log(ex.StackTrace);
-            }
-
-            if (editor == null)
-            {
-                var feeds = new ObservableCollection<Feed>
+                if (editor == null)
+                {
+                    var feeds = new ObservableCollection<Feed>
                 {
                     new Feed("api.nuget.org", "https://api.nuget.org/v3/index.json"),
                     new Feed("dotnet-core", "https://dotnet.myget.org/F/dotnet-core/api/v3/index.json"),
@@ -50,51 +71,55 @@ namespace PackageReferenceEditor.Avalonia
                     new Feed("portable-xaml", "https://ci.appveyor.com/nuget/portable-xaml")
                 };
 
-                var patterns = new ObservableCollection<string>
+                    var patterns = new ObservableCollection<string>
                 {
                     "*.props",
                     "*.csproj"
                 };
 
-                editor = new ReferenceEditor()
+                    editor = new ReferenceEditor()
+                    {
+                        Feeds = feeds,
+                        CurrentFeed = feeds.FirstOrDefault(),
+                        SearchPath = @"C:\DOWNLOADS\GitHub",
+                        SearchPatterns = patterns,
+                        SearchPattern = patterns.FirstOrDefault(),
+                        AlwaysUpdate = false
+                    };
+                }
+
+                editor.Result = new UpdaterResult()
                 {
-                    Feeds = feeds,
-                    CurrentFeed = feeds.FirstOrDefault(),
-                    SearchPath = @"C:\DOWNLOADS\GitHub",
-                    SearchPatterns = patterns,
-                    SearchPattern = patterns.FirstOrDefault(),
-                    AlwaysUpdate = false
+                    Documents = new ObservableCollection<XmlDocument>(),
+                    References = new ObservableCollection<PackageReference>()
+                };
+
+                desktopLifetime.MainWindow = new MainWindow()
+                {
+                    DataContext = editor
+                };
+                desktopLifetime.Exit += (sennder, e) =>
+                {
+                    try
+                    {
+                        var json = JsonConvert.SerializeObject(editor, Newtonsoft.Json.Formatting.Indented, jsonSettings);
+                        File.WriteAllText(settingPath, json);
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.Log(ex.Message);
+                        if (ex.StackTrace != null)
+                        {
+                            Logger.Log(ex.StackTrace);
+                        }
+                    }
                 };
             }
-
-            editor.Result = new UpdaterResult()
+            else if (ApplicationLifetime is ISingleViewApplicationLifetime singleViewLifetime)
             {
-                Documents = new ObservableCollection<XmlDocument>(),
-                References = new ObservableCollection<PackageReference>()
-            };
-
-            BuildAvaloniaApp().Start<MainWindow>(() => editor);
-
-            try
-            {
-                var json = JsonConvert.SerializeObject(editor, Newtonsoft.Json.Formatting.Indented, jsonSettings);
-                File.WriteAllText(settingPath, json);
+                //singleViewLifetime.MainView = new MainView();
             }
-            catch (Exception ex)
-            {
-                Logger.Log(ex.Message);
-                Logger.Log(ex.StackTrace);
-            }
-        }
-
-        public static AppBuilder BuildAvaloniaApp()
-            => AppBuilder.Configure<App>()
-                         .UsePlatformDetect()
-                         .LogToDebug();
-
-        public override void Initialize()
-        {
-            AvaloniaXamlLoader.Load(this);
+            base.OnFrameworkInitializationCompleted();
         }
     }
 }

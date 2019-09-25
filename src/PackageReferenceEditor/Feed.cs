@@ -25,8 +25,8 @@ namespace PackageReferenceEditor
 
         public Feed(string name, string uri)
         {
-            Name = name;
-            Uri = uri;
+            _name = name;
+            _uri = uri;
         }
     }
 }

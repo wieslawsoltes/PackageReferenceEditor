@@ -24,7 +24,7 @@ namespace PackageReferenceEditor.Avalonia.Views
             AvaloniaXamlLoader.Load(this);
         }
 
-        private void patterns_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void patterns_SelectionChanged(object? sender, SelectionChangedEventArgs e)
         {
             try
             {
@@ -36,11 +36,14 @@ namespace PackageReferenceEditor.Avalonia.Views
             catch (Exception ex)
             {
                 Logger.Log(ex.Message);
-                Logger.Log(ex.StackTrace);
+                if (ex.StackTrace != null)
+                {
+                    Logger.Log(ex.StackTrace);
+                }
             }
         }
 
-        private async void buttonBrowse_Click(object sender, RoutedEventArgs e)
+        private async void buttonBrowse_Click(object? sender, RoutedEventArgs e)
         {
             try
             {
@@ -57,7 +60,10 @@ namespace PackageReferenceEditor.Avalonia.Views
             catch (Exception ex)
             {
                 Logger.Log(ex.Message);
-                Logger.Log(ex.StackTrace);
+                if (ex.StackTrace != null)
+                {
+                    Logger.Log(ex.StackTrace);
+                }
             }
         }
     }

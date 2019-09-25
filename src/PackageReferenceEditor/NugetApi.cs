@@ -26,14 +26,14 @@ namespace PackageReferenceEditor
             {
                 Logger.Log($"{(int)response.StatusCode} ({response.ReasonPhrase})");
             }
-            return null;
+            return string.Empty;
         }
 
         public static async Task<IList<string>> GetPackageVersions(string urlIndex, string packageName)
         {
             Logger.Log($"GetPackageVersions: {urlIndex}");
             var jsonIndex = await GetJson(urlIndex);
-            if (jsonIndex != null)
+            if (!string.IsNullOrEmpty(jsonIndex))
             {
                 var objectIndex = JsonConvert.DeserializeObject<JObject>(jsonIndex);
                 var urlTemplate = (string)objectIndex["resources"].FirstOrDefault(x => (string)x["@type"] == "PackageBaseAddress/3.0.0")["@id"];
@@ -42,7 +42,7 @@ namespace PackageReferenceEditor
                 var urlVersions = $"{urlTemplate}{packageName}/index.json";
                 Logger.Log($"Versions: {urlVersions}");
                 var jsonVersions = await GetJson(urlVersions);
-                if (jsonVersions != null)
+                if (!string.IsNullOrEmpty(jsonVersions))
                 {
                     var objectVersions = JsonConvert.DeserializeObject<JObject>(jsonVersions);
                     var versions = objectVersions["versions"].Select(x => (string)x).ToList();
@@ -50,7 +50,7 @@ namespace PackageReferenceEditor
                     return versions;
                 }
             }
-            return null;
+            return new List<string>();
         }
     }
 }

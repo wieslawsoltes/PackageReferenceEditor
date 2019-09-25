@@ -7,12 +7,12 @@ namespace PackageReferenceEditor
     [DataContract]
     public class PackageReference : ReactiveObject
     {
-        private string _name;
-        private string _version;
-        private string _fileName;
-        private XmlDocument _document;
-        private XmlNode _reference;
-        private XmlAttribute _versionAttribute;
+        private string _name = string.Empty;
+        private string _version = string.Empty;
+        private string _fileName = string.Empty;
+        private XmlDocument? _document;
+        private XmlNode? _reference;
+        private XmlAttribute? _versionAttribute;
 
         [DataMember]
         public string Name
@@ -36,21 +36,21 @@ namespace PackageReferenceEditor
         }
 
         [DataMember]
-        public XmlDocument Document
+        public XmlDocument? Document
         {
             get => _document;
             set => this.RaiseAndSetIfChanged(ref _document, value);
         }
 
         [DataMember]
-        public XmlNode Reference
+        public XmlNode? Reference
         {
             get => _reference;
             set => this.RaiseAndSetIfChanged(ref _reference, value);
         }
 
         [DataMember]
-        public XmlAttribute VersionAttribute
+        public XmlAttribute? VersionAttribute
         {
             get => _versionAttribute;
             set => this.RaiseAndSetIfChanged(ref _versionAttribute, value);
