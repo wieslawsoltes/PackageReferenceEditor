@@ -3,6 +3,7 @@
 [![Build status](https://dev.azure.com/wieslawsoltes/GitHub/_apis/build/status/Sources/PackageReferenceEditor)](https://dev.azure.com/wieslawsoltes/GitHub/_build/latest?definitionId=57)
 
 [![NuGet](https://img.shields.io/nuget/v/PackageReferenceEditor.svg)](https://www.nuget.org/packages/PackageReferenceEditor)
+[![NuGet](https://img.shields.io/nuget/dt/PackageReferenceEditor.svg)](https://www.nuget.org/packages/PackageReferenceEditor)
 [![MyGet](https://img.shields.io/myget/packagereferenceeditor-nightly/vpre/PackageReferenceEditor.svg?label=myget)](https://www.myget.org/gallery/packagereferenceeditor-nightly) 
 
 [![Github All Releases](https://img.shields.io/github/downloads/wieslawsoltes/packagereferenceeditor/total.svg)](https://github.com/wieslawsoltes/packagereferenceeditor)
