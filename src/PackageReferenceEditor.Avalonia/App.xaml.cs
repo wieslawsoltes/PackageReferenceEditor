@@ -5,7 +5,6 @@ using System.Linq;
 using System.Xml;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Logging.Serilog;
 using Avalonia.Markup.Xaml;
 using Newtonsoft.Json;
 

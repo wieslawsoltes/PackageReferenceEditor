@@ -13,7 +13,7 @@ namespace PackageReferenceEditor
     {
         private IList<Feed>? _feeds;
         private Feed? _currentFeed;
-        private IList<string>? _versions;
+        private IList<string?>? _versions;
         private string? _currentVersion;
         private string? _searchPath;
         private string? _searchPattern;
@@ -39,7 +39,7 @@ namespace PackageReferenceEditor
         }
 
         [IgnoreDataMember]
-        public IList<string>? Versions
+        public IList<string?>? Versions
         {
             get => _versions;
             set => this.RaiseAndSetIfChanged(ref _versions, value);
@@ -199,7 +199,7 @@ namespace PackageReferenceEditor
                     {
                         if (versions.Count > 0)
                         {
-                            Versions = new ObservableCollection<string>(versions.Reverse());
+                            Versions = new ObservableCollection<string?>(versions.Reverse());
                             CurrentVersion = Versions.FirstOrDefault();
                         }
                     });
