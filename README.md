@@ -40,7 +40,7 @@ You can find the packages here [NuGet](https://www.nuget.org/packages/PackageRef
 ### Package Sources
 
 * https://api.nuget.org/v3/index.json
-* https://pkgs.dev.azure.com/wieslawsoltes/GitHub/_packaging/CI/nuget/v3/index.json
+* https://pkgs.dev.azure.com/wieslawsoltes/GitHub/_packaging/Nightly/nuget/v3/index.json
 
 ## Example Usage with Cake build scripts
 
