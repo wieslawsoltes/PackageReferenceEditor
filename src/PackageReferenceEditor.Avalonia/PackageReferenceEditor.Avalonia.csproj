@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp3.0;net461</TargetFrameworks>
+    <TargetFrameworks>net5.0;net461</TargetFrameworks>
     <OutputType>WinExe</OutputType>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     <EnableDefaultCompileItems>False</EnableDefaultCompileItems>
@@ -29,8 +29,6 @@
   <ItemGroup>
     <Compile Include="**\*.cs" Exclude="obj\**" />
   </ItemGroup>
-
-  <Import Project="..\..\build\EmbedXaml.props" />
 
   <ItemGroup>
     <ProjectReference Include="..\PackageReferenceEditor\PackageReferenceEditor.csproj" />

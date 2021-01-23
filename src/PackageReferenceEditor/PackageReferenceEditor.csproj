@@ -7,7 +7,6 @@
     <EnableDefaultCompileItems>False</EnableDefaultCompileItems>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-
   <PropertyGroup>
     <PackageId>PackageReferenceEditor</PackageId>
     <Description>MSBuild, csproj and props package reference editor.</Description>
