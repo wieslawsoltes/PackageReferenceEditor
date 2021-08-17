@@ -50,7 +50,7 @@ namespace PackageReferenceEditor.Avalonia.Views
                 if (DataContext is ReferenceEditor vm)
                 {
                     var dlg = new OpenFolderDialog();
-                    var path = await dlg.ShowAsync((Window)this.VisualRoot);
+                    var path = await dlg.ShowAsync((Window?)this.VisualRoot);
                     if (!string.IsNullOrWhiteSpace(path))
                     {
                         vm.SearchPath = path;
