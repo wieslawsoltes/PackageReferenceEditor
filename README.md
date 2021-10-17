@@ -1,6 +1,7 @@
 # PackageReferenceEditor
 
-[![Build status](https://dev.azure.com/wieslawsoltes/GitHub/_apis/build/status/Sources/PackageReferenceEditor)](https://dev.azure.com/wieslawsoltes/GitHub/_build/latest?definitionId=57)
+[![Build Status](https://dev.azure.com/wieslawsoltes/GitHub/_apis/build/status/wieslawsoltes.PackageReferenceEditor?branchName=master)](https://dev.azure.com/wieslawsoltes/GitHub/_build/latest?definitionId=101&branchName=master)
+[![CI](https://github.com/wieslawsoltes/PackageReferenceEditor/actions/workflows/build.yml/badge.svg)](https://github.com/wieslawsoltes/PackageReferenceEditor/actions/workflows/build.yml)
 
 [![NuGet](https://img.shields.io/nuget/v/PackageReferenceEditor.svg)](https://www.nuget.org/packages/PackageReferenceEditor)
 [![NuGet](https://img.shields.io/nuget/dt/PackageReferenceEditor.svg)](https://www.nuget.org/packages/PackageReferenceEditor)
