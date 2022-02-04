@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <OutputType>WinExe</OutputType>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    <IsPackable>False</IsPackable>
+    <Nullable>enable</Nullable>
+    <RootNamespace>PackageReferenceEditor.Desktop</RootNamespace>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Description>MSBuild, csproj and props package reference editor.</Description>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PublishTrimmed>False</PublishTrimmed>
+    <PublishSingleFile>False</PublishSingleFile>
+    <PublishReadyToRun>True</PublishReadyToRun>
+  </PropertyGroup>
+
+  <Import Project="..\..\build\Base.props" />
+  <Import Project="..\..\build\ReferenceAssemblies.props" />
+  <Import Project="..\..\build\Avalonia.props" />
+  <Import Project="..\..\build\Avalonia.Diagnostics.props" />
+  <Import Project="..\..\build\Avalonia.Desktop.props" />
+
+  <ItemGroup>
+    <ProjectReference Include="..\PackageReferenceEditor.Base\PackageReferenceEditor.Base.csproj" />
+    <ProjectReference Include="..\PackageReferenceEditor\PackageReferenceEditor.csproj" />
+  </ItemGroup>
+
+</Project>
