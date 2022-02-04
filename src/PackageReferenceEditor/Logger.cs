@@ -1,12 +1,11 @@
 ﻿using System;
 
-namespace PackageReferenceEditor
+namespace PackageReferenceEditor;
+
+public static class Logger
 {
-    public static class Logger
+    public static void Log(string message)
     {
-        public static void Log(string message)
-        {
-            Console.WriteLine(message);
-        }
+        Console.WriteLine(message);
     }
 }

@@ -3,41 +3,40 @@ using System.Runtime.Serialization;
 using System.Xml;
 using ReactiveUI;
 
-namespace PackageReferenceEditor
+namespace PackageReferenceEditor;
+
+[DataContract]
+public class UpdaterResult : ReactiveObject
 {
-    [DataContract]
-    public class UpdaterResult : ReactiveObject
+    private IList<XmlDocument>? _documents;
+    private IList<PackageReference>? _references;
+    private Dictionary<string, IList<PackageReference>>? _groupedReferences;
+
+    [DataMember]
+    public IList<XmlDocument>? Documents
     {
-        private IList<XmlDocument>? _documents;
-        private IList<PackageReference>? _references;
-        private Dictionary<string, IList<PackageReference>>? _groupedReferences;
+        get => _documents;
+        set => this.RaiseAndSetIfChanged(ref _documents, value);
+    }
 
-        [DataMember]
-        public IList<XmlDocument>? Documents
-        {
-            get => _documents;
-            set => this.RaiseAndSetIfChanged(ref _documents, value);
-        }
+    [DataMember]
+    public IList<PackageReference>? References
+    {
+        get => _references;
+        set => this.RaiseAndSetIfChanged(ref _references, value);
+    }
 
-        [DataMember]
-        public IList<PackageReference>? References
-        {
-            get => _references;
-            set => this.RaiseAndSetIfChanged(ref _references, value);
-        }
+    [DataMember]
+    public Dictionary<string, IList<PackageReference>>? GroupedReferences
+    {
+        get => _groupedReferences;
+        set => this.RaiseAndSetIfChanged(ref _groupedReferences, value);
+    }
 
-        [DataMember]
-        public Dictionary<string, IList<PackageReference>>? GroupedReferences
-        {
-            get => _groupedReferences;
-            set => this.RaiseAndSetIfChanged(ref _groupedReferences, value);
-        }
-
-        public void Reset()
-        {
-            Documents?.Clear();
-            References?.Clear();
-            GroupedReferences?.Clear();
-        }
+    public void Reset()
+    {
+        Documents?.Clear();
+        References?.Clear();
+        GroupedReferences?.Clear();
     }
 }

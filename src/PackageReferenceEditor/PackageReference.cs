@@ -2,58 +2,57 @@
 using System.Xml;
 using ReactiveUI;
 
-namespace PackageReferenceEditor
+namespace PackageReferenceEditor;
+
+[DataContract]
+public class PackageReference : ReactiveObject
 {
-    [DataContract]
-    public class PackageReference : ReactiveObject
+    private string _name = string.Empty;
+    private string _version = string.Empty;
+    private string _fileName = string.Empty;
+    private XmlDocument? _document;
+    private XmlNode? _reference;
+    private XmlAttribute? _versionAttribute;
+
+    [DataMember]
+    public string Name
     {
-        private string _name = string.Empty;
-        private string _version = string.Empty;
-        private string _fileName = string.Empty;
-        private XmlDocument? _document;
-        private XmlNode? _reference;
-        private XmlAttribute? _versionAttribute;
+        get => _name;
+        set => this.RaiseAndSetIfChanged(ref _name, value);
+    }
 
-        [DataMember]
-        public string Name
-        {
-            get => _name;
-            set => this.RaiseAndSetIfChanged(ref _name, value);
-        }
+    [DataMember]
+    public string Version
+    {
+        get => _version;
+        set => this.RaiseAndSetIfChanged(ref _version, value);
+    }
 
-        [DataMember]
-        public string Version
-        {
-            get => _version;
-            set => this.RaiseAndSetIfChanged(ref _version, value);
-        }
+    [DataMember]
+    public string FileName
+    {
+        get => _fileName;
+        set => this.RaiseAndSetIfChanged(ref _fileName, value);
+    }
 
-        [DataMember]
-        public string FileName
-        {
-            get => _fileName;
-            set => this.RaiseAndSetIfChanged(ref _fileName, value);
-        }
+    [DataMember]
+    public XmlDocument? Document
+    {
+        get => _document;
+        set => this.RaiseAndSetIfChanged(ref _document, value);
+    }
 
-        [DataMember]
-        public XmlDocument? Document
-        {
-            get => _document;
-            set => this.RaiseAndSetIfChanged(ref _document, value);
-        }
+    [DataMember]
+    public XmlNode? Reference
+    {
+        get => _reference;
+        set => this.RaiseAndSetIfChanged(ref _reference, value);
+    }
 
-        [DataMember]
-        public XmlNode? Reference
-        {
-            get => _reference;
-            set => this.RaiseAndSetIfChanged(ref _reference, value);
-        }
-
-        [DataMember]
-        public XmlAttribute? VersionAttribute
-        {
-            get => _versionAttribute;
-            set => this.RaiseAndSetIfChanged(ref _versionAttribute, value);
-        }
+    [DataMember]
+    public XmlAttribute? VersionAttribute
+    {
+        get => _versionAttribute;
+        set => this.RaiseAndSetIfChanged(ref _versionAttribute, value);
     }
 }

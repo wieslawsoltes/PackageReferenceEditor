@@ -1,18 +1,17 @@
 ﻿using Avalonia;
 using PackageReferenceEditor.Avalonia;
 
-namespace PackageReferenceEditor.Desktop
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
-        }
+namespace PackageReferenceEditor.Desktop;
 
-        public static AppBuilder BuildAvaloniaApp()
-            => AppBuilder.Configure<App>()
-                         .UsePlatformDetect()
-                         .LogToTrace();
+class Program
+{
+    static void Main(string[] args)
+    {
+        BuildAvaloniaApp().StartWithClassicDesktopLifetime(args);
     }
+
+    public static AppBuilder BuildAvaloniaApp()
+        => AppBuilder.Configure<App>()
+            .UsePlatformDetect()
+            .LogToTrace();
 }

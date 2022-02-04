@@ -2,21 +2,20 @@
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace PackageReferenceEditor.Avalonia.Views
-{
-    public partial class MainWindow : Window
-    {
-        public MainWindow()
-        {
-            this.InitializeComponent();
-#if DEBUG
-            this.AttachDevTools();
-#endif
-        }
+namespace PackageReferenceEditor.Avalonia.Views;
 
-        private void InitializeComponent()
-        {
-            AvaloniaXamlLoader.Load(this);
-        }
+public partial class MainWindow : Window
+{
+    public MainWindow()
+    {
+        this.InitializeComponent();
+#if DEBUG
+        this.AttachDevTools();
+#endif
+    }
+
+    private void InitializeComponent()
+    {
+        AvaloniaXamlLoader.Load(this);
     }
 }

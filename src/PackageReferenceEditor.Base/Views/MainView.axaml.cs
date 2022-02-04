@@ -3,67 +3,66 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 
-namespace PackageReferenceEditor.Avalonia.Views
+namespace PackageReferenceEditor.Avalonia.Views;
+
+public class MainView : UserControl
 {
-    public class MainView : UserControl
+    private readonly ComboBox _comboBoxPatterns;
+    private readonly Button _buttonBrowse;
+
+    public MainView()
     {
-        private readonly ComboBox _comboBoxPatterns;
-        private readonly Button _buttonBrowse;
+        InitializeComponent();
+        _comboBoxPatterns = this.FindControl<ComboBox>("comboBoxPatterns");
+        _comboBoxPatterns.SelectionChanged += patterns_SelectionChanged;
+        _buttonBrowse = this.FindControl<Button>("buttonBrowse");
+        _buttonBrowse.Click += buttonBrowse_Click;
+    }
 
-        public MainView()
-        {
-            InitializeComponent();
-            _comboBoxPatterns = this.FindControl<ComboBox>("comboBoxPatterns");
-            _comboBoxPatterns.SelectionChanged += patterns_SelectionChanged;
-            _buttonBrowse = this.FindControl<Button>("buttonBrowse");
-            _buttonBrowse.Click += buttonBrowse_Click;
-        }
+    private void InitializeComponent()
+    {
+        AvaloniaXamlLoader.Load(this);
+    }
 
-        private void InitializeComponent()
+    private void patterns_SelectionChanged(object? sender, SelectionChangedEventArgs e)
+    {
+        try
         {
-            AvaloniaXamlLoader.Load(this);
-        }
-
-        private void patterns_SelectionChanged(object? sender, SelectionChangedEventArgs e)
-        {
-            try
+            if (DataContext is ReferenceEditor vm)
             {
-                if (DataContext is ReferenceEditor vm)
-                {
-                    vm.SearchPattern = _comboBoxPatterns.SelectedItem as string;
-                }
-            }
-            catch (Exception ex)
-            {
-                Logger.Log(ex.Message);
-                if (ex.StackTrace != null)
-                {
-                    Logger.Log(ex.StackTrace);
-                }
+                vm.SearchPattern = _comboBoxPatterns.SelectedItem as string;
             }
         }
-
-        private async void buttonBrowse_Click(object? sender, RoutedEventArgs e)
+        catch (Exception ex)
         {
-            try
+            Logger.Log(ex.Message);
+            if (ex.StackTrace != null)
             {
-                if (DataContext is ReferenceEditor vm)
+                Logger.Log(ex.StackTrace);
+            }
+        }
+    }
+
+    private async void buttonBrowse_Click(object? sender, RoutedEventArgs e)
+    {
+        try
+        {
+            if (DataContext is ReferenceEditor vm)
+            {
+                var dlg = new OpenFolderDialog();
+                var path = await dlg.ShowAsync((Window?)this.VisualRoot);
+                if (!string.IsNullOrWhiteSpace(path))
                 {
-                    var dlg = new OpenFolderDialog();
-                    var path = await dlg.ShowAsync((Window?)this.VisualRoot);
-                    if (!string.IsNullOrWhiteSpace(path))
-                    {
-                        vm.SearchPath = path;
-                    }
+                    vm.SearchPath = path;
                 }
             }
-            catch (Exception ex)
+        }
+        catch (Exception ex)
+        {
+            Logger.Log(ex.Message);
+            if (ex.StackTrace != null)
             {
-                Logger.Log(ex.Message);
-                if (ex.StackTrace != null)
-                {
-                    Logger.Log(ex.StackTrace);
-                }
+                Logger.Log(ex.StackTrace);
             }
         }
     }
