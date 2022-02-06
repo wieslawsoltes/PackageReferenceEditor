@@ -3,7 +3,7 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 
-namespace PackageReferenceEditor.Avalonia.Views;
+namespace PackageReferenceEditor.Views;
 
 public class MainView : UserControl
 {
@@ -50,7 +50,12 @@ public class MainView : UserControl
             if (DataContext is ReferenceEditor vm)
             {
                 var dlg = new OpenFolderDialog();
-                var path = await dlg.ShowAsync((Window?)this.VisualRoot);
+                var window = (Window?)this.VisualRoot;
+                if (window is null)
+                {
+                    return;
+                }
+                var path = await dlg.ShowAsync(window);
                 if (!string.IsNullOrWhiteSpace(path))
                 {
                     vm.SearchPath = path;

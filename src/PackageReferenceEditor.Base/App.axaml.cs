@@ -7,9 +7,9 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Newtonsoft.Json;
-using PackageReferenceEditor.Avalonia.Views;
+using PackageReferenceEditor.Views;
 
-namespace PackageReferenceEditor.Avalonia;
+namespace PackageReferenceEditor;
 
 public class App : Application
 {

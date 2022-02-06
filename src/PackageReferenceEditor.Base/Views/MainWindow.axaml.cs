@@ -2,7 +2,7 @@
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace PackageReferenceEditor.Avalonia.Views;
+namespace PackageReferenceEditor.Views;
 
 public partial class MainWindow : Window
 {

@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="PackageReferenceEditor.Avalonia.Views.MainView"
+﻿<UserControl x:Class="PackageReferenceEditor.Views.MainView"
              xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              UseLayoutRounding="True" Focusable="True">

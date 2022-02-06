@@ -6,7 +6,7 @@
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     <IsPackable>False</IsPackable>
     <Nullable>enable</Nullable>
-    <RootNamespace>PackageReferenceEditor.Avalonia</RootNamespace>
+    <RootNamespace>PackageReferenceEditor</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup>
