@@ -102,7 +102,19 @@ public static class Updater
             {
                 if (!ignoredPaths.Any(i => NormalizePath(fileName).Contains(NormalizePath(i))))
                 {
-                    FindReferences(fileName, references, documents);
+                    try
+                    {
+                        FindReferences(fileName, references, documents);
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.Log($"Failed to find reference for {fileName}");
+                        Logger.Log(ex.Message);
+                        if (ex.StackTrace != null)
+                        {
+                            Logger.Log(ex.StackTrace);
+                        }
+                    }
                 }
             });
 
