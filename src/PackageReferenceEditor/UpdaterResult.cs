@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Xml;
-using ReactiveUI;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace PackageReferenceEditor;
 
 [DataContract]
-public class UpdaterResult : ReactiveObject
+public class UpdaterResult : ObservableObject
 {
     private IList<XmlDocument>? _documents;
     private IList<PackageReference>? _references;
@@ -16,21 +16,21 @@ public class UpdaterResult : ReactiveObject
     public IList<XmlDocument>? Documents
     {
         get => _documents;
-        set => this.RaiseAndSetIfChanged(ref _documents, value);
+        set => SetProperty(ref _documents, value);
     }
 
     [DataMember]
     public IList<PackageReference>? References
     {
         get => _references;
-        set => this.RaiseAndSetIfChanged(ref _references, value);
+        set => SetProperty(ref _references, value);
     }
 
     [DataMember]
     public Dictionary<string, IList<PackageReference>>? GroupedReferences
     {
         get => _groupedReferences;
-        set => this.RaiseAndSetIfChanged(ref _groupedReferences, value);
+        set => SetProperty(ref _groupedReferences, value);
     }
 
     public void Reset()

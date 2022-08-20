@@ -1,11 +1,11 @@
 ﻿using System.Runtime.Serialization;
 using System.Xml;
-using ReactiveUI;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace PackageReferenceEditor;
 
 [DataContract]
-public class PackageReference : ReactiveObject
+public class PackageReference : ObservableObject
 {
     private string _name = string.Empty;
     private string _version = string.Empty;
@@ -18,41 +18,41 @@ public class PackageReference : ReactiveObject
     public string Name
     {
         get => _name;
-        set => this.RaiseAndSetIfChanged(ref _name, value);
+        set => SetProperty(ref _name, value);
     }
 
     [DataMember]
     public string Version
     {
         get => _version;
-        set => this.RaiseAndSetIfChanged(ref _version, value);
+        set => SetProperty(ref _version, value);
     }
 
     [DataMember]
     public string FileName
     {
         get => _fileName;
-        set => this.RaiseAndSetIfChanged(ref _fileName, value);
+        set => SetProperty(ref _fileName, value);
     }
 
     [DataMember]
     public XmlDocument? Document
     {
         get => _document;
-        set => this.RaiseAndSetIfChanged(ref _document, value);
+        set => SetProperty(ref _document, value);
     }
 
     [DataMember]
     public XmlNode? Reference
     {
         get => _reference;
-        set => this.RaiseAndSetIfChanged(ref _reference, value);
+        set => SetProperty(ref _reference, value);
     }
 
     [DataMember]
     public XmlAttribute? VersionAttribute
     {
         get => _versionAttribute;
-        set => this.RaiseAndSetIfChanged(ref _versionAttribute, value);
+        set => SetProperty(ref _versionAttribute, value);
     }
 }

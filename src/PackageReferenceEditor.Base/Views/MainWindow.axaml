@@ -4,6 +4,8 @@
         xmlns:views="clr-namespace:PackageReferenceEditor.Views;assembly=PackageReferenceEditor.Base"
         UseLayoutRounding="True" RenderOptions.BitmapInterpolationMode="HighQuality"
         WindowState="Normal" WindowStartupLocation="CenterScreen"
-        Title="PackageReferenceEditor" Height="600" Width="800">
-    <views:MainView/>
+        Title="Package Reference Editor" 
+        Height="750" Width="1100"
+        MinWidth="700" MinHeight="450">
+  <views:MainView />
 </Window>

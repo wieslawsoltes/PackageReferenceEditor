@@ -1,10 +1,10 @@
 ﻿using System.Runtime.Serialization;
-using ReactiveUI;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace PackageReferenceEditor;
 
 [DataContract]
-public class Feed : ReactiveObject
+public class Feed : ObservableObject
 {
     private string _name;
     private string _uri;
@@ -13,14 +13,14 @@ public class Feed : ReactiveObject
     public string Name
     {
         get => _name;
-        set => this.RaiseAndSetIfChanged(ref _name, value);
+        set => SetProperty(ref _name, value);
     }
 
     [DataMember]
     public string Uri
     {
         get => _uri;
-        set => this.RaiseAndSetIfChanged(ref _uri, value);
+        set => SetProperty(ref _uri, value);
     }
 
     public Feed(string name, string uri)

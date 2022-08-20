@@ -17,7 +17,7 @@
   <Import Project="..\..\build\SourceLink.props" />
   <Import Project="..\..\build\ReferenceAssemblies.props" />
   <Import Project="..\..\build\Newtonsoft.Json.props" />
-  <Import Project="..\..\build\ReactiveUI.props" />
+  <Import Project="..\..\build\CommunityToolkit.Mvvm.props" />
 
   <ItemGroup>
     <Compile Include="**\*.cs" Exclude="obj\**" />

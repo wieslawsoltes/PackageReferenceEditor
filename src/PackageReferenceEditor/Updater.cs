@@ -108,7 +108,7 @@ public static class Updater
                     }
                     catch (Exception ex)
                     {
-                        Logger.Log($"Failed to find reference for {fileName}");
+                        Logger.Log($"Failed to find reference for: {fileName}");
                         Logger.Log(ex.Message);
                         if (ex.StackTrace != null)
                         {

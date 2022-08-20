@@ -1,5 +1,4 @@
 ﻿using Avalonia;
-using PackageReferenceEditor;
 
 namespace PackageReferenceEditor.Desktop;
 
