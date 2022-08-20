@@ -43,6 +43,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "props", "props", "{B8ACA4FA
 		build\XUnit.props = build\XUnit.props
 		build\SourceLink.props = build\SourceLink.props
 		build\Avalonia.Web.Blazor.props = build\Avalonia.Web.Blazor.props
+		build\Avalonia.Themes.Fluent.props = build\Avalonia.Themes.Fluent.props
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{8A8848E4-0FF5-45C2-84AF-4B9A0F6172C3}"
